@@ -3,4 +3,4 @@ node_js:
   - "iojs"
 before_script:
   - npm install
-script: npm run build
+script: npm run dev
