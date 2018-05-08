@@ -1,0 +1,11 @@
+{
+  "name": "shelter-connect",
+  "version": "0.0.1",
+  "description": "A web application to connect homeless shelters and organizations in need to individuals who want to help.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
