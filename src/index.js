@@ -28,4 +28,13 @@ console.log(error.message);
 
 });
 
+const db = firebase.database();
+var request_ref = db.ref("requests");
+
+request_ref.on("value", function(snapshot) {
+    console.log(snapshot.val());
+}, function(errorObject) {
+    console.log("read failed: " + errorObject.code);
+});
+
 ReactDOM.render(<Router history={browserHistory} routes={Routes} />, outlet);
