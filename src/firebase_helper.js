@@ -15,8 +15,10 @@ export function initialize() {
     }
     catch(error) {
         console.error(error);
+        
         return false;
     }
+
     return true;
 }
 
@@ -25,8 +27,9 @@ export function signInUser() {
         // Handle Errors here.
         console.log(error.code);
         console.log(error.message);
+        
         return false;
-        });
+    });
 
     /* This code just for testing the connection to Firebase. */
     firebase.auth().onAuthStateChanged(function(user) {
@@ -40,18 +43,16 @@ export function signInUser() {
     });
 
     return true;
-
 }
 
 export function getRequestList() {
-    
     var request_list = [];
 
     var request_ref = db.ref("requests");
     request_ref.on("value", function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
-            var data = childSnapshot.val();
             var element = {};
+            var data = childSnapshot.val();
 
             element.key = childSnapshot.key;
             element.date_added = data.date_added;
@@ -68,14 +69,14 @@ export function getRequestList() {
                 element.org_email = cdata.org_email;
                 element.org_name = cdata.org_name;
                 element.org_phone = cdata.org_phone;
-
             });
+
             request_list.push(element);
-            
         })
     }, function(errorObject) {
         console.log("read failed: " + errorObject.code);
     });
+
     return request_list;
 }
 
