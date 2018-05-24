@@ -1,3 +1,11 @@
+/*
+    This file contains all of the functionality for interacting
+    with our firebase intsance. 
+
+    usage: `import * as firebase_helper from "./firebase_helper.js";
+*/
+
+
 import firebase from "firebase";
 import * as firebase_config from "./firebase_config.js";
 
@@ -5,8 +13,11 @@ import * as firebase_config from "./firebase_config.js";
 var db;
 
 /* 
+    !! Only run this once in components/index.js !!
     Initializes the firebase app connection
-    You only need to run this once in components/index.js
+    
+    Returns true if firebase_config is valid and the databse
+    is initialized.
 */
 export function initialize() {
     try {
@@ -22,9 +33,14 @@ export function initialize() {
     return true;
 }
 
-export function signInUser() {
-    firebase.auth().signInWithEmailAndPassword('rykerls@uw.edu', 'test00').catch(function(error) {
-        // Handle Errors here.
+/*
+    Signs in the an organization with given email and password.
+
+    Returns true if the user has been signed in successfully. 
+*/
+export function signInUser(email, password) {
+    // user: rykerls@uw.edu pw: test00
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         console.log(error.code);
         console.log(error.message);
         
@@ -45,6 +61,12 @@ export function signInUser() {
     return true;
 }
 
+/*
+    Returns an array of **all** requests, along with the organization
+    information for the org that created the request.
+    
+    TODD: filter out requests that are expired.
+*/
 export function getRequestList() {
     var request_list = [];
 
@@ -79,4 +101,3 @@ export function getRequestList() {
 
     return request_list;
 }
-
