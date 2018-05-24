@@ -14,6 +14,8 @@ export default class Header extends Component {
 					<ul>
 						<li><IndexLink to="/" activeClassName="active">home</IndexLink></li>
 						<li><NavLink to="/about">about</NavLink></li>
+						<li><NavLink to="/signin">sign in</NavLink></li>
+						<li><NavLink to="/signup">sign up</NavLink></li>
 					</ul>
 				</nav>
 			</header>

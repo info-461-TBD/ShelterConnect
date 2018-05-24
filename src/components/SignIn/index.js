@@ -1,7 +1,5 @@
 import React from "react";
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import * as firebasehelper from "../../firebase_helper.js";
 
 export default class SignIn extends React.Component {
     constructor(props) {
@@ -14,19 +12,19 @@ export default class SignIn extends React.Component {
         };
     }
     componentDidMount() {
-        this.authUnsub = firebase.auth().onAuthStateChanged(user => {
+        this.authUnsub = firebasehelper.firebase.auth().onAuthStateChanged(user => {
             this.setState({ currentUser: user });
         });
     }
     componentWillUnmount() {
         this.authUnsub();
     }
-    handleSignIn(evt) {
-        evt.preventDefault();
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => this.props.history.push("/Home"))
-            .catch(err => alert(err.message));
-    }
+    // handleSignIn(evt) {
+    //     evt.preventDefault();
+    //     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    //         .then(() => this.props.history.push("/Home"))
+    //         .catch(err => alert(err.message));
+    // }
 
     render() {
         let signinStyle = {
@@ -50,7 +48,7 @@ export default class SignIn extends React.Component {
                 <section style={signinStyle}>
                     <div className="container">
                         <h1>Sign In</h1>
-                        <form onSubmit={evt => this.handleSignIn(evt)}>
+                        <form onSubmit={evt => firebasehelper.signInUser(this.state.email, this.state.password)}>
                             <div className="form-group">
                                 <h4 style={labelStyle}>Email:</h4>
                                 <input id="email" type="email" className="form-control"
