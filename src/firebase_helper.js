@@ -5,12 +5,14 @@
     usage: `import * as firebase_helper from "./firebase_helper.js";
 */
 
-
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 import * as firebase_config from "./firebase_config.js";
 
 /* The firebase database object */
 var db;
+export { firebase };
 
 /* 
     !! Only run this once in components/index.js !!
@@ -101,3 +103,10 @@ export function getRequestList() {
 
     return request_list;
 }
+
+
+/*
+    TODO:
+        - createuser
+
+*/
