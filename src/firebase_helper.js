@@ -5,6 +5,15 @@
     usage: `import * as firebase_helper from "./firebase_helper.js";
 */
 
+/*
+    TODO:
+        - createuser
+        - updateuser
+        - createRequest
+        - editRequest
+        - filter and sorting of request list
+*/
+
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
@@ -36,30 +45,11 @@ export function initialize() {
 }
 
 /*
-    Signs in the an organization with given email and password.
-
-    Returns true if the user has been signed in successfully. 
+    Don't use this function. It will be removed once Sunny updates his code not to call this function.
+    (It's better just to perfrom the sign-in/out functionality directly in the component, rather than have
+    a wrappera around it.)
 */
 export function signInUser(email, password) {
-    // user: rykerls@uw.edu pw: test00
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        console.log(error.code);
-        console.log(error.message);
-        
-        return false;
-    });
-
-    /* This code just for testing the connection to Firebase. */
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // console.log(user.displayName);
-            // console.log(user.email);
-            // console.log(user.emailVerified);
-            // console.log(user.uid);
-            // console.log(user.photoURL);
-        }
-    });
-
     return true;
 }
 
@@ -146,32 +136,41 @@ export function getRequestList() {
 }
 
 export function createUser(account_email, password, org_name, photo_url, contact_email, contact_phone, contact_address, org_description) {
-    firebase.auth().createUserWithEmailAndPassword(account_email, password).catch(function(error) {
-        console.log(error.code);
-        console.log(error.message);
-    });
-
-    var user = firebase.auth().currentUser;
-
-    if (user) {
-        user.sendEmailVerification().then(function() {
-            console.log("email sent.");
+    firebase.auth().createUserWithEmailAndPassword(account_email, password).then(function() {
+        console.log("signed up.");
+        var user = firebase.auth().currentUser;
+        if (user) {
+            console.log("updating profile");
             user.updateProfile({
                 displayName: org_name,
                 photoURL: photo_url
             }).then(function() {
-                console.log("updated profile");
-                writeUserData(user.uid, contact_email, contact_phone, contact_address, org_description);
+                console.log("writing to users/");
+                writeUserData(user.uid, org_name, contact_email, contact_phone, contact_address, org_description);
             }).catch(function(error) {
                 console.log(error);
             });
-        }).catch(function(error) {
-            console.log(error);
-        });
-    }
+        }
+    }).catch(function(error) {
+        console.log(error.code);
+        console.log(error.message);
+    });
+    
 }
 
+
+/* 
+    !! This is a private function. Don't call it from outside this file. !!
+
+    Writes the passed arguments to the `users/<uid>` section of the database.
+*/
 function writeUserData(uid, org_name, org_email, org_phone, org_address, org_description) {
+    console.log("uid: " + uid);
+    console.log("org_name: " + org_name)
+    console.log("org_description: " + org_description);
+    console.log("org_email: " + org_email);
+    console.log("org_name: " + org_name);
+    console.log("org_phone: " + org_phone);
     db.ref("users/" + uid).set({
         "org_address": org_address,
         "org_description": org_description,
@@ -187,10 +186,3 @@ function writeUserData(uid, org_name, org_email, org_phone, org_address, org_des
         }
     });
 }
-
-
-/*
-    TODO:
-        - createuser
-
-*/

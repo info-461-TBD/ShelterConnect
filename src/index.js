@@ -16,7 +16,8 @@ if (firebase_helper.initialize()) {
     console.log(firebase_helper.getRequestList());
     console.log(firebase_helper.getSingleRequest(1));
 
-    firebase_helper.createUser("testasdfadfasd@mailtothis.com", "test00", "test", "",  "rykerls@uw.edu", 55555555, "123 Easy st.", "test test test");
+    // Uncomment this line and increment the number after '+' in the first argument to create a new user.
+    // firebase_helper.createUser("rykerls+9@uw.edu", "test00", "test", "",  "rykerls@uw.edu", 55555555, "123 Easy st.", "test test test");
 }
 
 ReactDOM.render(<Router history={browserHistory} routes={Routes} />, outlet);
