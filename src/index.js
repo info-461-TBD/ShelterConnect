@@ -10,10 +10,10 @@ const outlet = document.getElementById("root");
 
 if (firebase_helper.initialize()) {
     //Signs in user rykerls@uw.edu
-    if (firebase_helper.signInUser("rykerls@uw.edu", "test00")) {
+    // if (firebase_helper.signInUser("rykerls@uw.edu", "test00")) {
         
-    }
-    console.log(firebase_helper.getRequestList());
+    // }
+    // console.log(firebase_helper.getRequestList());
 }
 
 ReactDOM.render(<Router history={browserHistory} routes={Routes} />, outlet);
