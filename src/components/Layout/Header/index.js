@@ -1,24 +1,36 @@
 import React, { Component } from "react";
 import classnames from "classnames";
+import {Navbar, Nav, NavItem} from "react-bootstrap";
 
 import { IndexLink } from "react-router";
 import NavLink from "../NavLink";
 
+import "./style.css";
+
 export default class Header extends Component {
 	render() {
 		return(
-			<header className={classnames("Header", this.props.className)}>
-				<h1>Header</h1>
-				<p>TODO: UPDATE Header <code>./components/Layout/Header/index.js</code></p>
-				<nav>
-					<ul>
-						<li><IndexLink to="/" activeClassName="active">home</IndexLink></li>
-						<li><NavLink to="/about">about</NavLink></li>
-						<li><NavLink to="/signin">sign in</NavLink></li>
-						<li><NavLink to="/signup">sign up</NavLink></li>
-					</ul>
-				</nav>
-			</header>
+			<Navbar collapseOnSelect>
+				<Navbar.Header>
+  					<Navbar.Brand>
+						<a href="/">ShelterConnect</a>
+  					</Navbar.Brand>
+  					<Navbar.Toggle />
+				</Navbar.Header>
+				<Navbar.Collapse>
+					<Nav pullRight>
+						<NavItem eventKey={1} href="/about">
+							About
+						</NavItem>
+						<NavItem eventKey={2} href="/signin">
+							Sign In
+						</NavItem>
+						<NavItem eventKey={3} href="/signup">
+							Register
+						</NavItem>
+					</Nav>
+				</Navbar.Collapse>
+			</Navbar>
 		);
 	}
 }
