@@ -14,6 +14,9 @@ if (firebase_helper.initialize()) {
         
     }
     console.log(firebase_helper.getRequestList());
+    console.log(firebase_helper.getSingleRequest(1));
+
+    firebase_helper.createUser("testasdfadfasd@mailtothis.com", "test00", "test", "",  "rykerls@uw.edu", 55555555, "123 Easy st.", "test test test");
 }
 
 ReactDOM.render(<Router history={browserHistory} routes={Routes} />, outlet);
