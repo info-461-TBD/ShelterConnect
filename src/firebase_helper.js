@@ -135,6 +135,9 @@ export function getRequestList() {
     return request_list;
 }
 
+/*
+    Creates a new firebase user and stores additional information in the database, tied to that user account.
+*/ 
 export function createUser(account_email, password, org_name, photo_url, contact_email, contact_phone, contact_address, org_description) {
     firebase.auth().createUserWithEmailAndPassword(account_email, password).then(function() {
         console.log("signed up.");
