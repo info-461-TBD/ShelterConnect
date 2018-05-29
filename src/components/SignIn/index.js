@@ -1,5 +1,6 @@
 import React from "react";
 import firebase from 'firebase/app';
+import { browserHistory } from "react-router";
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -24,7 +25,8 @@ export default class SignIn extends React.Component {
     handleSignIn(evt) {
         evt.preventDefault();
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => this.props.history.push("/Home"))
+            // .then(localStorage.setItem("authorization"))
+            .then(() => browserHistory.push("/"))
             .catch(err => alert(err.message));
     }
 
