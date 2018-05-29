@@ -9,9 +9,12 @@ import logo from "./logo.svg";
 import "./style.css";
 
 export default class Home extends Component {
-	
+	componentDidMount() {
+		this.queryByValue("request_text");
+	}
 
 	// query data ordered by a given child key
+	// child keys: date_added, donation_type, ptr_user_account, request_text
 	queryByValue(child) {
 		var jsonData = [];
 		firebase.database().ref("requests").orderByChild(child).on("child_added", function(snapshot) {
@@ -21,6 +24,8 @@ export default class Home extends Component {
 		return jsonData;
 	}
 	
+	
+
 	render() {
 		return (
 			<div className={classnames("App", this.props.className)}>
