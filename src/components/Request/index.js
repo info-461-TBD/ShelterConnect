@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import {Modal} from "react-bootstrap";
+import {Modal, Button} from "react-bootstrap";
 import classnames from "classnames";
-import { ListItem } from 'react-mdl';
-
-import "./style.css";
 
 const BASEURL = "http://shelterconnect.com/request/";
 const DEFAULT_IMG = "";
@@ -34,6 +31,9 @@ export default class Request extends React.Component {
                         {this.props.address}
                     </address>
                 </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={this.handleClose}>Close</Button>
+            </Modal.Footer>
             </Modal>
         );
     }
