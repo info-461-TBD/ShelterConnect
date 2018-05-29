@@ -25,7 +25,6 @@ export default class SignIn extends React.Component {
     handleSignIn(evt) {
         evt.preventDefault();
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            // .then(localStorage.setItem("authorization"))
             .then(() => browserHistory.push("/"))
             .then(console.log(this.state.currentUser))
             .catch(err => alert(err.message));
@@ -33,7 +32,7 @@ export default class SignIn extends React.Component {
 
     render() {
         let signinStyle = {
-            width: "30%",
+            width: "60%",
             marginTop: "10px",
             marginLeft: "auto",
             marginRight: "auto",
@@ -48,6 +47,9 @@ export default class SignIn extends React.Component {
             paddingTop: "5px",
             color: "white"
         }
+        let formStyle = {
+            width: "58%"
+        }
         return (
             <section>
                 <section style={signinStyle}>
@@ -59,14 +61,16 @@ export default class SignIn extends React.Component {
                                 <input id="email" type="email" className="form-control"
                                     placeholder="enter your email address"
                                     value={this.state.email}
-                                    onInput={evt => this.setState({ email: evt.target.value })} />
+                                    onInput={evt => this.setState({ email: evt.target.value })}
+                                    style={formStyle} />
                             </div>
                             <div className="form-group">
                                 <h4 style={labelStyle}>Password:</h4>
                                 <input id="password" type="password" className="form-control"
                                     placeholder="enter your password"
                                     value={this.state.password}
-                                    onInput={evt => this.setState({ password: evt.target.value })} />
+                                    onInput={evt => this.setState({ password: evt.target.value })} 
+                                    style={formStyle}/>
                             </div>
                             <div className="last-row d-flex">
                                 <div className="form-group">

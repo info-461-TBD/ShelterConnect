@@ -25,7 +25,8 @@ export default class SignUpView extends React.Component {
             check: false,
             personalName: "",
             personalEmail: "",
-            elecSign: ""
+            elecSign: "",
+            reqCount: 0
         };
         this.handleCheckBox = this.handleCheckBox.bind(this);
     }
@@ -42,19 +43,24 @@ export default class SignUpView extends React.Component {
             alert("Your passwords do not match");
         }
         evt.preventDefault();
-        // if (this.state.displayName) {
+        // reqCount == 11
+        if (this.state.organizationName) {
             firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
                 .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
                 .then(() => browserHistory.push("/"))
-                .then(console.log(this.currentUser))
+                .then(console.log(this.state.currentUser))
                 .catch(err => alert(err.message));
-        // } else {
-        //     alert("Need a display name");
-        // }
+        } else {
+             alert("Missing or incorrectly filled out a required field");
+        }
     }
     
     handleCheckBox() {
         this.state.check = !this.state.check;
+    }
+    updateReqCount() {
+        this.state.reqCount++;
+        console.log(this.state.reqCount);
     }
     render() {
         let signupStyle = {

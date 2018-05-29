@@ -15,9 +15,9 @@ export default class Home extends Component {
         this.authUnsub = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
 				this.setState({ currentUser: user });
+				console.log(this.state.currentUser)
 			}
 		});
-		console.log(this.state.currentUser)
 	}
 	componentWillUnmount() {
         this.authUnsub();
@@ -33,7 +33,7 @@ export default class Home extends Component {
 					To get started, edit <code>./components/Home/index.js</code> and save to reload.
 				</p>
 				<h1>
-					{this.state.currentUser ?
+					{this.state.currentUser = undefined ?
                         "Hello, " + firebase.auth().currentUser.organizationName : "..."}
 				</h1>
 			</div>
