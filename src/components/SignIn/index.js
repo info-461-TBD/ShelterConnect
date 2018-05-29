@@ -41,7 +41,7 @@ export default class SignIn extends React.Component {
         let textStyle = {
             marginLeft: "8px",
             paddingTop: "5px",
-            color: "white",
+            color: "white"
         }
         return (
             <section>
