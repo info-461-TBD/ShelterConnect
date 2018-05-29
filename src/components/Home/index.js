@@ -17,7 +17,11 @@ export default class Home extends Component {
 				this.setState({ currentUser: user });
 			}
 		});
+		console.log(this.state.currentUser)
 	}
+	componentWillUnmount() {
+        this.authUnsub();
+    }
 	render() {
 		return (
 			<div className={classnames("App", this.props.className)}>
