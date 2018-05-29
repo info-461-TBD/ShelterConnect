@@ -90,14 +90,14 @@ export function getSingleRequest(id) {
 
 /*
     Returns an array of **all** requests, along with the organization
-    information for the org that created the request.
+    information for the org that created the request, ordered by date.
     
     TODD: filter out requests that are expired.
 */
 export function getRequestList() {
     var request_list = [];
 
-    var request_ref = db.ref("requests");
+    var request_ref = db.ref("requests").orderByChild('date_added');
     request_ref.on("value", function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
             var element = {};
@@ -131,7 +131,50 @@ export function getRequestList() {
     }, function(errorObject) {
         console.log("read failed: " + errorObject.code);
     });
+    return request_list;
+}
 
+/* Returns the list of requests created by the logged in user, ordered by date. */
+export function getRequestListByOrg() {
+    var request_list = [];
+    firebase.auth().onAuthStateChanged(function(user) {
+        var request_ref = db.ref("requests").orderByChild('date_added');
+            request_ref.on("value", function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                var element = {};
+                var data = childSnapshot.val();
+                
+                var uid = data.ptr_user_account;
+                var expiration_date = new Date(new Date().setDate(new Date().getDate() - 30));
+                var date_added = new Date(data.date_added);
+                console.log("uid: " + uid);
+                console.log("userID: " + user.uid);
+
+                /* If the request was added within last 30 days, add it to the list */
+                if (uid === user.uid && expiration_date <= date_added) {
+                    element.key = childSnapshot.key;
+                    element.date_added = data.date_added;
+                    element.donation_type = data.donation_type;
+                    element.request_text = data.request_text;
+                
+                    element.uid = uid
+                
+                    db.ref("users/" + uid).once('value').then(function(snapshot) {
+                        var cdata = snapshot.val()
+                        element.org_address = cdata.org_address;
+                        element.org_description = cdata.org_description;
+                        element.org_email = cdata.org_email;
+                        element.org_name = cdata.org_name;
+                        element.org_phone = cdata.org_phone;
+                    });
+
+                    request_list.push(element);
+                }
+            })
+        }, function(errorObject) {
+            console.log("read failed: " + errorObject.code);
+        });
+    });
     return request_list;
 }
 

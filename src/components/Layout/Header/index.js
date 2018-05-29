@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import classnames from "classnames";
 import {Navbar, Nav, NavItem} from "react-bootstrap";
-
-import { IndexLink } from "react-router";
-import NavLink from "../NavLink";
 
 import "./style.css";
 
