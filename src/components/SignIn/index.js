@@ -19,6 +19,7 @@ export default class SignIn extends React.Component {
             this.setState({ currentUser: user });
         });
     }
+
     componentWillUnmount() {
         this.authUnsub();
     }
@@ -48,7 +49,7 @@ export default class SignIn extends React.Component {
             color: "white"
         }
         let formStyle = {
-            width: "58%"
+            width: "55%"
         }
         return (
             <section>

@@ -13,7 +13,8 @@ export default class Home extends Component {
 		super(props);
 		this.state = {
 			requests: undefined,
-			errorMessage: ""
+			errorMessage: "",
+			user: undefined
 		}
 	}
 
@@ -26,6 +27,15 @@ export default class Home extends Component {
   
 	componentDidMount() {
 		this.queryByValue("request_text");
+		this.authUnsub = firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+				this.setState({ user: user });
+			}
+		});
+	}
+
+	componentWillUnmount() {
+		this.authUnsub();
 	}
 
 	// query data ordered by a given child key
@@ -56,6 +66,7 @@ export default class Home extends Component {
 				<ListGroup>
 					{requests}
 				</ListGroup>
+				<h1>{this.state.user ? console.log(this.state.user) : "Hello guest"}</h1>
 			</div>
 		);
 	}
