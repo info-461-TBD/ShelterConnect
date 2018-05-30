@@ -3,7 +3,7 @@ import { Grid, ListGroup, ListGroupItem} from "react-bootstrap";
 import { browserHistory } from "react-router";
 import classnames from "classnames";
 import Request from "../Request";
-import {getRequestList} from "../../firebase_helper.js";
+import * as firebase_helper from "../../firebase_helper.js";
 
 import "./style.css";
 
@@ -16,13 +16,12 @@ export default class Home extends Component {
 	}
 
 	componentWillMount() {
-		this.state.requests = getRequestList();
+		this.state.requests = firebase_helper.getRequestList();
 	}
 	handleMove() {
 		browserHistory.push("/signup");
 	}
-  
-export default class Home extends Component {
+
 	componentDidMount() {
 		this.queryByValue("request_text");
 	}
@@ -31,7 +30,7 @@ export default class Home extends Component {
 	// child keys: date_added, donation_type, ptr_user_account, request_text
 	queryByValue(child) {
 		var jsonData = [];
-		firebase.database().ref("requests").orderByChild(child).on("child_added", function(snapshot) {
+		firebase_helper.firebase.database().ref("requests").orderByChild(child).on("child_added", function(snapshot) {
 			console.log(snapshot.key + ": " + snapshot.val().child);
 			jsonData.push(snapshot);
 		});
