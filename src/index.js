@@ -8,6 +8,7 @@ import "./index.css";
 
 const outlet = document.getElementById("root");
 
+
 if (firebase_helper.initialize()) {
     //Signs in user rykerls@uw.edu
     // if (firebase_helper.signInUser("rykerls@uw.edu", "test00")) {
