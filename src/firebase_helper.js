@@ -133,14 +133,6 @@ export function getRequestList() {
     return request_list;
 }
 
-export function filterBy(attribute, list) {
-    var filtered_list = []
-    filtered_list = getRequestList();
-    console.log(obj.requests);
-
-    return filtered_list;
-}
-
 /*
     Creates a new firebase user and stores additional information in the database, tied to that user account.
 */ 

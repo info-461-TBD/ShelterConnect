@@ -18,8 +18,6 @@ if (firebase_helper.initialize()) {
     let list = firebase_helper.getRequestList();
     console.log(list);
 
-    console.log("testing filter method");
-    console.log(firebase_helper.filterBy("date_added", list));
     //console.log(firebase_helper.getSingleRequest(1));
 
     // Uncomment this line and increment the number after '+' in the first argument to create a new user.
