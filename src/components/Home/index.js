@@ -13,6 +13,7 @@ export default class Home extends Component {
 		super(props);
 		this.state = {
 			requests: undefined,
+			errorMessage: ""
 		}
 	}
 
@@ -37,7 +38,6 @@ export default class Home extends Component {
 		});
 		return jsonData;
 	}
-	
 	
 
 	render() {
