@@ -1,5 +1,8 @@
 import React from "react";
-import * as firebasehelper from "../../firebase_helper.js";
+import firebase from 'firebase/app';
+import { browserHistory } from "react-router";
+import 'firebase/auth';
+import 'firebase/database';
 
 export default class SignIn extends React.Component {
     constructor(props) {
@@ -12,23 +15,24 @@ export default class SignIn extends React.Component {
         };
     }
     componentDidMount() {
-        this.authUnsub = firebasehelper.firebase.auth().onAuthStateChanged(user => {
+        this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             this.setState({ currentUser: user });
         });
     }
     componentWillUnmount() {
         this.authUnsub();
     }
-    // handleSignIn(evt) {
-    //     evt.preventDefault();
-    //     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    //         .then(() => this.props.history.push("/Home"))
-    //         .catch(err => alert(err.message));
-    // }
+    handleSignIn(evt) {
+        evt.preventDefault();
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => browserHistory.push("/"))
+            .then(console.log(this.state.currentUser))
+            .catch(err => alert(err.message));
+    }
 
     render() {
         let signinStyle = {
-            width: "30%",
+            width: "60%",
             marginTop: "10px",
             marginLeft: "auto",
             marginRight: "auto",
@@ -41,27 +45,32 @@ export default class SignIn extends React.Component {
         let textStyle = {
             marginLeft: "8px",
             paddingTop: "5px",
-            color: "white",
+            color: "white"
+        }
+        let formStyle = {
+            width: "58%"
         }
         return (
             <section>
                 <section style={signinStyle}>
                     <div className="container">
                         <h1>Sign In</h1>
-                        <form onSubmit={evt => firebasehelper.signInUser(this.state.email, this.state.password)}>
+                        <form onSubmit={evt => this.handleSignIn(evt)}>
                             <div className="form-group">
                                 <h4 style={labelStyle}>Email:</h4>
                                 <input id="email" type="email" className="form-control"
                                     placeholder="enter your email address"
                                     value={this.state.email}
-                                    onInput={evt => this.setState({ email: evt.target.value })} />
+                                    onInput={evt => this.setState({ email: evt.target.value })}
+                                    style={formStyle} />
                             </div>
                             <div className="form-group">
                                 <h4 style={labelStyle}>Password:</h4>
                                 <input id="password" type="password" className="form-control"
                                     placeholder="enter your password"
                                     value={this.state.password}
-                                    onInput={evt => this.setState({ password: evt.target.value })} />
+                                    onInput={evt => this.setState({ password: evt.target.value })} 
+                                    style={formStyle}/>
                             </div>
                             <div className="last-row d-flex">
                                 <div className="form-group">
