@@ -95,12 +95,11 @@ export function getSingleRequest(id) {
     TODD: filter out requests that are expired.
 */
 export function getRequestList() {
-    var request_list = [];
-
+    var request_list = []
     var request_ref = db.ref("requests");
     request_ref.on("value", function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
-            var element = {};
+            var element = [];
             var data = childSnapshot.val();
 
             var expiration_date = new Date(new Date().setDate(new Date().getDate() - 30));
@@ -131,8 +130,15 @@ export function getRequestList() {
     }, function(errorObject) {
         console.log("read failed: " + errorObject.code);
     });
-
     return request_list;
+}
+
+export function filterBy(attribute, list) {
+    var filtered_list = []
+    filtered_list = getRequestList();
+    console.log(obj.requests);
+
+    return filtered_list;
 }
 
 /*
