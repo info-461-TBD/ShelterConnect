@@ -2,7 +2,7 @@
 editData(evt, msgSnapshot) {
     evt.preventDefault();
     msgSnapshot.ref.update({
-        
+        "request_text": this.state.edit,
     });
     this.setState({edit: ""});
 }
