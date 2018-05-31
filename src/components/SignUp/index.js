@@ -30,14 +30,17 @@ export default class SignUpView extends React.Component {
         };
         this.handleCheckBox = this.handleCheckBox.bind(this);
     }
+
     componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             this.setState({ currentUser: user });
         });
     }
+
     componentWillUnmount() {
         this.authUnsub();
     }
+
     handleSignUp(evt) {
         if (this.state.password !== this.state.confirm) {
             alert("Your passwords do not match");
@@ -46,18 +49,27 @@ export default class SignUpView extends React.Component {
         // reqCount == 11
         if (this.state.organizationName) {
             firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-                .then(user => {
+                .then(function () {
+                    user = firebase.auth().currentUser;
+                })
+                .then(function () {
                     user.updateProfile({
+                        displayName: this.state.organizationName,
+                        email: this.state.email
+                    });
+                })
+                .then(user => {
+                    firebase.database().ref('users').child(user.uid).set({
                         name: this.state.organizationName,
                         tel: this.state.phoneNum,
                         email: this.state.email,
-                        address: this.state.streetAddress,
+                        address: this.state.address,
                         city: this.state.city,
                         state: this.state.stateName,
                         zip: this.state.zip,
-                        description: this.state.description
+                        website: this.state.website,
+                        description: this.state.description 
                     });
-                    return user;
                 })
                 .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
                 .then(() => browserHistory.push("/"))
@@ -71,10 +83,12 @@ export default class SignUpView extends React.Component {
     handleCheckBox() {
         this.state.check = !this.state.check;
     }
+
     updateReqCount() {
         this.state.reqCount++;
         console.log(this.state.reqCount);
     }
+
     render() {
         let signupStyle = {
             width: "60%",
