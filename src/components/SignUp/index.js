@@ -51,7 +51,8 @@ export default class SignUpView extends React.Component {
             let user;
             if (this.state.organizationName) {
                 firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-                    .then(x => {
+                    .then(() => {
+                        user = firebase.auth().currentUser;
                         user.updateProfile({
                             displayName: this.state.organizationName,
                             email: this.state.email,
