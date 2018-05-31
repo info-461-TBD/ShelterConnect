@@ -23,7 +23,6 @@ export default class Header extends Component {
 	componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                this.userRef = firebase.database().ref('users').child(user.uid);
                 this.setState({ user: user });
             } else {
                 this.setState({ user: undefined });
