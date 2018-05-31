@@ -29,52 +29,74 @@ export default class SignUpView extends React.Component {
             reqCount: 0
         };
         this.handleCheckBox = this.handleCheckBox.bind(this);
+        this.handleSignUp = this.handleSignUp.bind(this);
+
     }
+
     componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             this.setState({ currentUser: user });
         });
     }
+
     componentWillUnmount() {
         this.authUnsub();
     }
+
     handleSignUp(evt) {
+        evt.preventDefault();
         if (this.state.password !== this.state.confirm) {
             alert("Your passwords do not match");
-        }
-        evt.preventDefault();
-        // reqCount == 11
-        if (this.state.organizationName) {
-            firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-                .then(user => {
-                    user.updateProfile({
-                        name: this.state.organizationName,
-                        tel: this.state.phoneNum,
-                        email: this.state.email,
-                        address: this.state.streetAddress,
-                        city: this.state.city,
-                        state: this.state.stateName,
-                        zip: this.state.zip,
-                        description: this.state.description
-                    });
-                    return user;
-                })
-                .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
-                .then(() => browserHistory.push("/"))
-                .then(console.log(this.state.currentUser))
-                .catch(err => alert(err.message));
         } else {
-             alert("Missing or incorrectly filled out a required field");
+            // reqCount == 11
+            console.log("hello");
+            let user;
+            if (this.state.organizationName) {
+                firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+                    .then(user => {
+                        console.log("setting profile");
+                        user.updateProfile({
+                            displayName: this.state.organizationName,
+                            email: this.state.email,
+                            phoneNumber: this.state.phoneNum
+                        });
+                        console.log(user);
+                        return user;
+                    })
+                    .then(user => {
+                        console.log("setting attributes");
+                        firebase.database().ref('users').child(user.uid).set({
+                            name: this.state.organizationName,
+                            tel: this.state.phoneNum,
+                            email: this.state.email,
+                            address: this.state.address,
+                            city: this.state.city,
+                            state: this.state.stateName,
+                            zip: this.state.zip,
+                            website: this.state.website,
+                            description: this.state.description 
+                        });
+                        console.log("website: " + user.website);
+                    })
+                    .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
+                    .then(() => browserHistory.push("/"))
+                    .then(console.log(this.state.currentUser))
+                    .catch(err => console.log(err.message));
+            } else {
+                 alert("Missing or incorrectly filled out a required field");
+            }
         }
     }
     
     handleCheckBox() {
-        this.state.check = !this.state.check;
+        this.setState({ check: !this.state.check });
     }
+
     updateReqCount() {
-        this.state.reqCount++;
+        this.setState({ reqCount: this.state.reqCount + 1 });
         console.log(this.state.reqCount);
     }
+
     render() {
         let signupStyle = {
             width: "60%",
