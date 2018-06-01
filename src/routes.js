@@ -9,6 +9,7 @@ import NotFound from "./components/NotFound";
 import Request from "./components/Request";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import NewRequest from "./components/NewRequest";
 
 
 const Routes = (
@@ -18,6 +19,7 @@ const Routes = (
     <Route path="/request" component={Request} />
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component ={SignUp} />
+    <Route path="/newform" component ={NewRequest} />
     <Route path="*" component={NotFound} />
     
   </Route>
