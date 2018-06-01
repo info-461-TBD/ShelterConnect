@@ -32,7 +32,7 @@ export default class SignIn extends React.Component {
 
     render() {
         let signinStyle = {
-            width: "60%",
+            width: "50%",
             marginTop: "10px",
             marginLeft: "auto",
             marginRight: "auto",
@@ -48,7 +48,7 @@ export default class SignIn extends React.Component {
             color: "white"
         }
         let formStyle = {
-            width: "58%"
+            width: "25%",
         }
         return (
             <section>

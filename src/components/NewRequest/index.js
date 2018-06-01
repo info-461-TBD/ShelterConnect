@@ -1,6 +1,7 @@
 import React from "react";
 import firebase from 'firebase/app';
 import { browserHistory } from "react-router";
+import {Modal, Button} from "react-bootstrap";
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -9,11 +10,18 @@ export default class NewRequest extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            
+            show: false,
 			errorMessage: ""
 		}
     }
+
+    handleClose = () => {
+        this.setState({ show: false });
+      }
     
+    handleShow = () => {
+        this.setState({ show: true });
+    }
     render() {
         let labelStyle = {
             color: "white"
@@ -29,6 +37,14 @@ export default class NewRequest extends React.Component {
         return (
             <section>
                 <section >
+                <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
+                    Create New Request
+                </Button>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>New Request</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <div className="container">
                         <h1>Sign In</h1>
                         <form onSubmit={evt => this.handleSignIn(evt)}>
@@ -57,6 +73,11 @@ export default class NewRequest extends React.Component {
                             </div>
                         </form>
                     </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.handleClose}>Close</Button>
+                    </Modal.Footer>
+                    </Modal>
                 </section>
             </section>
         );
