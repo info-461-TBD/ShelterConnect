@@ -1,5 +1,6 @@
 import React from "react";
 import firebase from 'firebase/app';
+import * as firebase_helper from '../../firebase_helper.js';
 import 'firebase/auth';
 import 'firebase/database';
 import { Checkbox } from 'react-bootstrap';
@@ -50,33 +51,34 @@ export default class SignUpView extends React.Component {
         } else {
             let user;
             if (this.state.organizationName) {
-                firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-                    .then(() => {
-                        user = firebase.auth().currentUser;
-                        user.updateProfile({
-                            displayName: this.state.organizationName,
-                            email: this.state.email,
-                            phoneNumber: this.state.phoneNum
-                        });
-                        return user;
-                    })
-                    .then(user => {
-                        firebase.database().ref('users').child(user.uid).set({
-                            name: this.state.organizationName,
-                            tel: this.state.phoneNum,
-                            email: this.state.email,
-                            address: this.state.address,
-                            city: this.state.city,
-                            state: this.state.stateName,
-                            zip: this.state.zip,
-                            website: this.state.website,
-                            description: this.state.description 
-                        });
-                    })
-                    .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
-                    .then(() => browserHistory.push("/"))
-                    .then(console.log(this.state.currentUser))
-                    .catch(err => console.log(err.message));
+                firebase_helper.createUser(this.state.email, this.state.password, this.state.organizationName, 
+                     this.state.personalEmail, this.state.phoneNum,  this.state.description);
+                // {
+                // firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+                //     .then(() => {
+                //         user = firebase.auth().currentUser;
+                //         user.updateProfile({
+                //             displayName: this.state.organizationName,
+                //             email: this.state.email
+                //         });
+                //         return user;
+                //     })
+                //     .then(user => {
+                //         firebase.database().ref('users').child(user.uid).set({
+                //             name: this.state.organizationName,
+                //             tel: 
+                //             email: this.state.email,
+                //             address: 
+                //             city: this.state.city,
+                //             state: this.state.stateName,
+                //             zip: this.state.zip,
+                //             website: this.state.website,
+                //             description: 
+                //         });
+                    // .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
+                    // .then(() => browserHistory.push("/"))
+                    // .then(console.log(this.state.currentUser))
+                    // .catch(err => console.log(err.message));
             } else {
                  alert("Missing or incorrectly filled out a required field");
             }
