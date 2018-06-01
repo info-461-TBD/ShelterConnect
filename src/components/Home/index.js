@@ -12,7 +12,12 @@ export default class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+<<<<<<< HEAD
 			requests: [],
+=======
+			requests: undefined,
+			errorMessage: ""
+>>>>>>> 8d3ba58e7ab802d470c5301349dc9061a9cf5821
 		}
 	}
 
@@ -46,6 +51,10 @@ export default class Home extends Component {
 		});
 		return jsonData;
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 8d3ba58e7ab802d470c5301349dc9061a9cf5821
 
 	render() {
 		var requests;
