@@ -1,44 +1,28 @@
 import React from "react";
 import firebase from 'firebase/app';
 import { browserHistory } from "react-router";
+import {Modal, Button} from "react-bootstrap";
 import 'firebase/auth';
 import 'firebase/database';
 
-export default class SignIn extends React.Component {
+
+export default class NewRequest extends React.Component {
     constructor(props) {
-        super(props);
-        this.state = {
-            errorMessage: undefined,
-            currentUser: undefined,
-            email: "",
-            password: ""
-        };
-    }
-    componentDidMount() {
-        this.authUnsub = firebase.auth().onAuthStateChanged(user => {
-            this.setState({ currentUser: user });
-        });
-    }
-    componentWillUnmount() {
-        this.authUnsub();
-    }
-    handleSignIn(evt) {
-        evt.preventDefault();
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => browserHistory.push("/"))
-            .then(console.log(this.state.currentUser))
-            .catch(err => alert(err.message));
+		super(props);
+		this.state = {
+            show: false,
+			errorMessage: ""
+		}
     }
 
+    handleClose = () => {
+        this.setState({ show: false });
+      }
+    
+    handleShow = () => {
+        this.setState({ show: true });
+    }
     render() {
-        let signinStyle = {
-            width: "50%",
-            marginTop: "10px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            backgroundColor: 'rgba(0,0,0,0.2)',
-            borderRadius: '8px'
-        }
         let labelStyle = {
             color: "white"
         }
@@ -48,11 +32,19 @@ export default class SignIn extends React.Component {
             color: "white"
         }
         let formStyle = {
-            width: "25%",
+            width: "58%"
         }
         return (
             <section>
-                <section style={signinStyle}>
+                <section >
+                <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
+                    Create New Request
+                </Button>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>New Request</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <div className="container">
                         <h1>Sign In</h1>
                         <form onSubmit={evt => this.handleSignIn(evt)}>
@@ -75,15 +67,22 @@ export default class SignIn extends React.Component {
                             <div className="last-row d-flex">
                                 <div className="form-group">
                                     <button type="submit" className="btn btn-primary">
-                                        Sign In
-                            </button>
+                                        Submit
+                                    </button>
                                 </div>
-                                <p style={textStyle}>Don't yet have an account?</p>
                             </div>
                         </form>
                     </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.handleClose}>Close</Button>
+                    </Modal.Footer>
+                    </Modal>
                 </section>
             </section>
         );
     }
+
+
+    
 }
