@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, ListGroup, ListGroupItem, DropdownButton, ButtonGroup, Button, MenuItem } from "react-bootstrap";
 import { browserHistory } from "react-router";
 import classnames from "classnames";
-
+import NewRequest from "../NewRequest";
 import Request from "../Request";
 import {getRequestList} from "../../firebase_helper.js";
 import firebase from "firebase/app";
@@ -12,12 +12,7 @@ export default class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-<<<<<<< HEAD
 			requests: [],
-=======
-			requests: undefined,
-			errorMessage: ""
->>>>>>> 8d3ba58e7ab802d470c5301349dc9061a9cf5821
 		}
 	}
 
@@ -51,10 +46,6 @@ export default class Home extends Component {
 		});
 		return jsonData;
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> 8d3ba58e7ab802d470c5301349dc9061a9cf5821
 
 	render() {
 		var requests;
@@ -80,6 +71,7 @@ export default class Home extends Component {
 					<Button onClick={this.handleDate}>by date</Button>
 					<DropdownButton title="by Organization.." id="bg-nested-dropdown">
 					</DropdownButton>
+					<NewRequest></NewRequest>
 				</ButtonGroup>
 				<ListGroup className="request-list">
 					{requests}
