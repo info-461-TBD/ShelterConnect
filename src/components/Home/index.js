@@ -91,7 +91,7 @@ export default class Home extends Component {
 				<ListGroup className="request-list">
 					{requests}
 				</ListGroup>
-				<h1>{this.state.user ? console.log(this.state.user) : "Hello guest"}</h1>
+				<h1>{this.state.user ? "Hello " + this.state.user.displayName : "Hello guest"}</h1>
 			</div>
 		);
 	}

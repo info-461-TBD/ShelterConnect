@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from 'firebase/app';
 import { browserHistory } from "react-router";
-import {Modal, Button} from "react-bootstrap";
+import {Modal, Button, Grid, ListGroup, ListGroupItem, DropdownButton, ButtonGroup, MenuItem } from "react-bootstrap";
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -10,10 +10,20 @@ export default class NewRequest extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = {
+            user: undefined,
             show: false,
-			errorMessage: ""
+            errorMessage: "",
+            donationType: "",   
+            endDate: "",
+            // phone: firebase.database().ref('users').child(this.state.user.uid).org_phone,
+            phone: "",
+            email: "",
+            address: "",
+            description: ""
 		}
     }
+
+
 
     handleClose = () => {
         this.setState({ show: false });
@@ -22,17 +32,26 @@ export default class NewRequest extends React.Component {
     handleShow = () => {
         this.setState({ show: true });
     }
+
+    handleNewPost = (evt) => {
+        console.log('send info to firebase');
+        evt.preventDefault();
+        // firebase.database().ref('requests').child(user.uid).push(
+
+        // );
+    }
+
     render() {
         let labelStyle = {
-            color: "white"
+            color: "black"
         }
         let textStyle = {
             marginLeft: "8px",
             paddingTop: "5px",
-            color: "white"
+            color: "black"
         }
         let formStyle = {
-            width: "58%"
+            width: "40%"
         }
         return (
             <section>
@@ -42,26 +61,51 @@ export default class NewRequest extends React.Component {
                 </Button>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>New Request</Modal.Title>
+                    <Modal.Title style={labelStyle}>New Request</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="container">
-                        <h1>New Request</h1>
-                        <form onSubmit={evt => this.handleSignIn(evt)}>
+                        <form onSubmit={evt => this.handleNewPost(evt)}>
+                            <DropdownButton title="Donation Type" id="bg-nested-dropdown">
+					        </DropdownButton>
                             <div className="form-group">
-                                <h4 style={labelStyle}>Title of request:</h4>
+                                <h4 style={labelStyle}>Expiration Date:</h4>
+                                <input id="date" type="date" className="form-control"
+                                    placeholder="select an expiration date"
+                                    value={this.state.endDate}
+                                    onInput={evt => this.setState({ endDate: evt.target.value })}
+                                    style={formStyle} />
+                            </div>
+                            <div className="form-group">
+                                <h4 style={labelStyle}>Phone:</h4>
+                                <input id="phone" type="phone" className="form-control"
+                                    placeholder={"Change if different from default organization phone number"}
+                                    value={this.state.phone}
+                                    onInput={evt => this.setState({ phone: evt.target.value })}
+                                    style={formStyle} />
+                            </div>
+                            <div className="form-group">
+                                <h4 style={labelStyle}>Email:</h4>
                                 <input id="email" type="email" className="form-control"
-                                    placeholder="enter your email address"
+                                    placeholder="Change if different from default organization email"
                                     value={this.state.email}
                                     onInput={evt => this.setState({ email: evt.target.value })}
                                     style={formStyle} />
                             </div>
                             <div className="form-group">
-                                <h4 style={labelStyle}>Password:</h4>
-                                <input id="password" type="password" className="form-control"
-                                    placeholder="enter your password"
-                                    value={this.state.password}
-                                    onInput={evt => this.setState({ password: evt.target.value })} 
+                                <h4 style={labelStyle}>Address:</h4>
+                                <input id="address" type="address" className="form-control"
+                                    placeholder="Change if different from default organization address"
+                                    value={this.state.address}
+                                    onInput={evt => this.setState({ address: evt.target.value })} 
+                                    style={formStyle}/>
+                            </div>
+                            <div className="form-group">
+                                <h4 style={labelStyle}>Description:</h4>
+                                <input id="descr" type="descr" className="form-control"
+                                    placeholder="Describe your request"
+                                    value={this.state.description}
+                                    onInput={evt => this.setState({ description: evt.target.value })} 
                                     style={formStyle}/>
                             </div>
                             <div className="last-row d-flex">
