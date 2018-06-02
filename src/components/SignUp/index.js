@@ -86,7 +86,6 @@ export default class SignUpView extends React.Component {
                     })
                     .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
                     .then(() => browserHistory.push("/"))
-                    .then(console.log(this.state.currentUser))
                     .catch(err => console.log(err.message));
             } else {
                  alert("Missing or incorrectly filled out a required field");
