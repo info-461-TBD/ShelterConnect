@@ -30,10 +30,10 @@ export default class NewRequest extends React.Component {
             <section>
                 <section >
                     <div className="container">
-                        <h1>Sign In</h1>
+                        <h1>New Request</h1>
                         <form onSubmit={evt => this.handleSignIn(evt)}>
                             <div className="form-group">
-                                <h4 style={labelStyle}>Email:</h4>
+                                <h4 style={labelStyle}>Title of request:</h4>
                                 <input id="email" type="email" className="form-control"
                                     placeholder="enter your email address"
                                     value={this.state.email}
