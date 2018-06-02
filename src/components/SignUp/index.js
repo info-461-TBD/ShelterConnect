@@ -1,5 +1,6 @@
 import React from "react";
 import firebase from 'firebase/app';
+// import * as firebase_helper from '../../firebase_helper.js';
 import 'firebase/auth';
 import 'firebase/database';
 import { Checkbox } from 'react-bootstrap';
@@ -37,12 +38,23 @@ export default class SignUpView extends React.Component {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             this.setState({ currentUser: user });
         });
+
+        
+        if (this.state.currentUser) {
+            firebase.auth().signOut()
+                .catch(function(error) {
+                    alert("Error: " + error.message);
+                })
+                .then(() => browserHistory.push("/"));
+        }
     }
 
     componentWillUnmount() {
         this.authUnsub();
     }
 
+    // firebase_helper.createUser(this.state.email, this.state.password, this.state.organizationName, 
+                     // this.state.personalEmail, this.state.phoneNum,  this.state.description);
     handleSignUp(evt) {
         evt.preventDefault();
         if (this.state.password !== this.state.confirm) {
@@ -55,27 +67,25 @@ export default class SignUpView extends React.Component {
                         user = firebase.auth().currentUser;
                         user.updateProfile({
                             displayName: this.state.organizationName,
-                            email: this.state.email,
-                            phoneNumber: this.state.phoneNum
+                            email: this.state.email
                         });
                         return user;
                     })
                     .then(user => {
-                        firebase.database().ref('users').child(user.uid).set({
+                        firebase.database().ref('users').child(user.uid).push({
                             name: this.state.organizationName,
                             tel: this.state.phoneNum,
                             email: this.state.email,
-                            address: this.state.address,
+                            address: this.state.streetAddress,
                             city: this.state.city,
                             state: this.state.stateName,
                             zip: this.state.zip,
                             website: this.state.website,
-                            description: this.state.description 
+                            description: this.state.description
                         });
                     })
                     .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
                     .then(() => browserHistory.push("/"))
-                    .then(console.log(this.state.currentUser))
                     .catch(err => console.log(err.message));
             } else {
                  alert("Missing or incorrectly filled out a required field");
@@ -198,7 +208,7 @@ export default class SignUpView extends React.Component {
                         </div>
                         <div>
                             <h4>Terms of Agreement </h4>
-                            “I certify that the answers provided are true and complete to the best of my knowledge, on behalf of my organization. I authorize investigation of all statements contained in this application. I understand that false or misleading information given in my application or future requests may result in discharge at any time.”
+                            <span className={textStyle}>“I certify that the answers provided are true and complete to the best of my knowledge, on behalf of my organization. I authorize investigation of all statements contained in this application. I understand that false or misleading information given in my application or future requests may result in discharge at any time.”</span>
                         </div>
                         <Checkbox onChange = {this.handleCheckBox}>
                             I agree to these Terms of Agreement.

@@ -136,18 +136,17 @@ export function getRequestList() {
 /*
     Creates a new firebase user and stores additional information in the database, tied to that user account.
 */ 
-export function createUser(account_email, password, org_name, photo_url, contact_email, contact_phone, contact_address, org_description) {
+export function createUser(account_email, password, org_name, contact_email, contact_phone, org_description) {
     firebase.auth().createUserWithEmailAndPassword(account_email, password).then(function() {
         console.log("signed up.");
         var user = firebase.auth().currentUser;
         if (user) {
             console.log("updating profile");
             user.updateProfile({
-                displayName: org_name,
-                photoURL: photo_url
+                displayName: org_name
             }).then(function() {
                 console.log("writing to users/");
-                writeUserData(user.uid, org_name, contact_email, contact_phone, contact_address, org_description);
+                writeUserData(user.uid, org_name, contact_email, contact_phone, org_description);
             }).catch(function(error) {
                 console.log(error);
             });
