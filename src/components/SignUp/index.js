@@ -48,23 +48,19 @@ export default class SignUpView extends React.Component {
         if (this.state.password !== this.state.confirm) {
             alert("Your passwords do not match");
         } else {
-            // reqCount == 11
-            console.log("hello");
             let user;
             if (this.state.organizationName) {
                 firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-                    .then(user => {
-                        console.log("setting profile");
+                    .then(() => {
+                        user = firebase.auth().currentUser;
                         user.updateProfile({
                             displayName: this.state.organizationName,
                             email: this.state.email,
                             phoneNumber: this.state.phoneNum
                         });
-                        console.log(user);
                         return user;
                     })
                     .then(user => {
-                        console.log("setting attributes");
                         firebase.database().ref('users').child(user.uid).set({
                             name: this.state.organizationName,
                             tel: this.state.phoneNum,
@@ -76,7 +72,6 @@ export default class SignUpView extends React.Component {
                             website: this.state.website,
                             description: this.state.description 
                         });
-                        console.log("website: " + user.website);
                     })
                     .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
                     .then(() => browserHistory.push("/"))
