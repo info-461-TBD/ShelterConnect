@@ -8,19 +8,17 @@ const DEFAULT_IMG = "";
 export default class Request extends React.Component {
     constructor(props) {
         super(props);
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
         this.state = {
             show: false
         };
     }
 
-    handleClose() {
+    handleClose = () => {
         this.setState({ show: false });
       }
     
-    handleShow() {
-    this.setState({ show: true });
+    handleShow = () => {
+        this.setState({ show: true });
     }
     render() {
         var tel = "tel:" + this.props.request.tel
