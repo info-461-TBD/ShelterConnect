@@ -21,6 +21,7 @@ import * as firebase_config from "./firebase_config.js";
 
 /* The firebase database object */
 var db;
+var users = [];
 export { firebase };
 
 /* 
@@ -92,6 +93,7 @@ export function getRequests() {
     });
     return result;
 }
+
 
 /*
     Returns an array of ALL users in the db

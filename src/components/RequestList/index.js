@@ -48,17 +48,20 @@ export default class RequestList extends Component {
 
 	render() {
 		var requests;
+		var organizations;
 		requests = this.props.requests.map(r => 
 			<ListGroupItem>
 				<Request request={r}>
 				</Request>
 			</ListGroupItem>
 		);
-		/*organizations = this.props.state.organizations.map(o =>
+		console.log("hi");
+		console.log(this.props.organizations[0]);
+		organizations = this.props.organizations.map(o =>
 			<MenuItem>
 				{o.name}
 			</MenuItem>
-		);*/
+		);
 		return (
 			<div className={classnames("RequestList", this.props.className)}>
 				<h1>Open Requests</h1>
@@ -66,6 +69,7 @@ export default class RequestList extends Component {
 				<ButtonGroup>
 					<Button onClick={this.handleDate}>by date</Button>
 					<DropdownButton title="by Organization.." id="bg-nested-dropdown">
+						{organizations}
 					</DropdownButton>
 					<NewRequest user={this.state.user}></NewRequest>
 				</ButtonGroup>
