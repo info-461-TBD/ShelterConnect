@@ -19,8 +19,8 @@ export default class Home extends Component {
 	}
 
 	componentWillMount() {
-		var newRequests = getRequestList();
-		this.setState({requests: newRequests});
+		// var newRequests = getRequestList();
+		// this.setState({requests: newRequests});
 	}
 	handleMove() {
 		browserHistory.push("/signup");
@@ -39,8 +39,8 @@ export default class Home extends Component {
 	}
 
 	handleDate = () => {
-		var newRequests = getRequestList();
-		this.setState({requests: newRequests});
+		// var newRequests = getRequestList();
+		// this.setState({requests: newRequests});
 	}
 	
 	/*
@@ -73,7 +73,7 @@ export default class Home extends Component {
 					<Button onClick={this.handleDate}>by date</Button>
 					<DropdownButton title="by Organization.." id="bg-nested-dropdown">
 					</DropdownButton>
-					<NewRequest></NewRequest>
+					<NewRequest user={this.state.user}></NewRequest>
 				</ButtonGroup>
 				<ListGroup className="request-list">
 					{requests}
