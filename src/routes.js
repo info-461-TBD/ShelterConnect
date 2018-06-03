@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import Home from "./components/Home";
 import About from "./components/About";
 import NotFound from "./components/NotFound";
-
+import Organizations from "./components/Organizations";
 import Request from "./components/Request";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
@@ -19,6 +19,7 @@ const Routes = (
     <Route path="/request" component={Request} />
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component ={SignUp} />
+    <Route path="/organizations" component={Organizations}/>
     <Route path="/newform" component ={NewRequest} />
     <Route path="*" component={NotFound} />
     
