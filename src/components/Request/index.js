@@ -25,10 +25,6 @@ export default class Request extends React.Component {
         }
     }
 
-            show: false
-        };
-    }
-
     handleClose = () => {
         this.setState({ show: false });
     }
@@ -51,9 +47,6 @@ export default class Request extends React.Component {
         evt.preventDefault();
         reqSnapshot.ref.remove();
     }
-
-    render() {
-        let reqSnapshot = firebase.database().ref().child("requests").push().key;
 
     render() {
         var tel = "tel:" + this.props.request.tel
