@@ -21,6 +21,7 @@ import * as firebase_config from "./firebase_config.js";
 
 /* The firebase database object */
 var db;
+var users = [];
 export { firebase };
 
 /* 
@@ -75,18 +76,6 @@ export function filterRequests(id, criteria, critVal) {
     return result;
 }
 
-export function retrieveUsers() {
-    var result = [];
-    var acc;
-
-    db.ref("users").once("value", function(snapshot) {
-        var data = snapshot.val();
-        for (acc in data) {
-            result.push(data[acc]);
-        }
-    });
-    return result;
-}
 
 /* 
     Returns a single request object that corresponds to request with id `id` 

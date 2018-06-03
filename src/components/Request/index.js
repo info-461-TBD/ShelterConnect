@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {Modal, Button} from "react-bootstrap";
 import classnames from "classnames";
-
+import "./style.css";
 const BASEURL = "http://shelterconnect.com/request/";
 const DEFAULT_IMG = "";
 
@@ -24,27 +24,45 @@ export default class Request extends React.Component {
         var tel = "tel:" + this.props.request.tel
         var email = "mailto:" + this.props.request.email + "?Subject=Complete Request " + this.props.id
         return (
-            <Modal show={this.state.show} onHide={this.handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Request for {this.props.request.organization}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <img src={this.props.request.image} alt=""/>
-                    <span>Start Date: {this.props.request.date}</span>
-                    <span>Date Needed by:{this.props.request.daterequired}</span>
-                    <p>
-                        {this.props.request.details}  
-                    </p>
-                    <a href={tel}>Call</a>
-                    <a href={email}>Send Email</a>
-                    <address>
-                        {this.props.request.address}
-                    </address>
-                </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={this.handleClose}>Close</Button>
-            </Modal.Footer>
-            </Modal>
+            <div className="request">
+                <p>Request Type: {this.props.request.donationType}</p>
+                <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
+                        details
+                </Button>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Request for {this.props.request.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="request">
+                            <h4>Request Type: {this.props.request.donationType}</h4>
+                            <h4>Date Needed by: {this.props.request.endDate}</h4>
+                            <h4>Description: </h4>
+                            <p>
+                                {this.props.request.description}  
+                            </p>
+                            <h4>
+                            Address: 
+                            </h4>
+                            <p>
+                                <address>
+                                    {this.props.request.address}
+                                </address>
+                            </p>
+                            <h4>
+                                Contact Us!:
+                            </h4>
+                            <p>
+                                Give us a <a href={tel}>Call</a> <br/>
+                                Send Us an <a href={email}>Email</a>
+                            </p>
+                        </div>
+                    </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.handleClose}>Close</Button>
+                </Modal.Footer>
+                </Modal>
+            </div>
         );
     }
 }
