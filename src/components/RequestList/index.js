@@ -54,6 +54,7 @@ export default class RequestList extends Component {
 	render() {
 		var requests;
 		if (this.props.requests != null) {
+			console.log(requests);
 			requests = this.props.requests.map(r => 
 				<ListGroupItem>
 					<Request request={r}>
