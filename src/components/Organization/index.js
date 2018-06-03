@@ -4,7 +4,7 @@ import { browserHistory } from "react-router";
 import classnames from "classnames";
 import "firebase/auth";
 import "firebase/database";
-
+import "./style.css"
 import firebase from "firebase/app";
 import Request from "../Request";
 import { getRequestList } from "../../firebase_helper.js";
@@ -54,20 +54,21 @@ export default class Organization extends Component {
         }
         return (
             <div className="organization-profile">
-                <img src={this.props.organization.image}/>
                 <h1>{this.props.organization.name}</h1>
+                <h4>Description:</h4><br/>
                 <p>{this.props.organization.description}</p>
                 <div className="contact">
                     <h3>Contact Us!</h3>
-                    <p>Phone Number:</p> <br/>
+                    <p>Phone Number:</p>
                     <a href={tel}>{this.props.organization.tel}</a>
-                    <p>Email:</p> <br/>
+                    <p>Email:</p>
                     <a href={email}>{this.props.organization.email}</a>
-                    <p>Address:</p> <br/>
+                    <p>Address:</p>
                     <p>{this.props.organization.address}</p>
                     <p>Website:</p>
                     <p>{this.props.organization.website}</p>
                 </div>
+                <h2 className="organization-requests">Requests Open for {this.props.organization.name}</h2>
                 <ListGroup>
                     {requests}
                 </ListGroup>
