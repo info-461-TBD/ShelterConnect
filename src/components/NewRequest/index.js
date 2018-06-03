@@ -4,6 +4,7 @@ import { browserHistory } from "react-router";
 import {Modal, Button, Grid, ListGroup, ListGroupItem, DropdownButton, ButtonGroup, MenuItem } from "react-bootstrap";
 import 'firebase/auth';
 import 'firebase/database';
+import * as firebase_helper from "../../firebase_helper.js";
 
 
 export default class NewRequest extends React.Component {
@@ -18,8 +19,15 @@ export default class NewRequest extends React.Component {
             phone: "",
             email: "",
             address: "",
-            description: ""
+            description: "",
+            userList: null,
+            filtered: null
 		}
+    }
+
+    componentWillMount() {
+        this.setUserList();
+        this.filterRequests("donationType", "Clothes");
     }
     
     componentDidMount() {
@@ -33,6 +41,45 @@ export default class NewRequest extends React.Component {
 
     componentWillUnmount() {
         this.authUnsub();
+    }
+
+    filterRequests = (criteria, critVal) => {
+        var result = [];
+        var json;
+        var item;
+        let data;
+
+        firebase.database().ref("requests").once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+            for (json in data) {
+                for (item in data[json]) {
+                    if (data[json][item][criteria] == critVal) {
+                        result.push(data[json][item]);
+                    }
+                }
+            }
+            this.setState( { filtered : result} );
+        });
+    }
+    
+
+    setUserList = () => {
+        let ref = firebase_helper.retrieveUsers();
+
+        let result = [];
+        let data;
+        let acc;
+
+        ref.once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+            for (acc in data) {
+                let curr = data[acc];
+                result.push(curr);
+            }
+            this.setState( { userList : result} );
+        });
     }
 
     populateForm = () => {
@@ -57,13 +104,14 @@ export default class NewRequest extends React.Component {
 
     handleNewPost = (evt) => {
         evt.preventDefault();
-        firebase.database().ref('requests').push({
+        firebase.database().ref('/requests/' + this.state.currentUser.uid).push({
             donationType: this.state.donationType,
             endDate: this.state.endDate,
             phone: this.state.phone,
             email: this.state.email,
             address: this.state.address,
-            description: this.state.description
+            description: this.state.description,
+            name: this.state.currentUser.displayName
         });
     }
 
@@ -78,6 +126,12 @@ export default class NewRequest extends React.Component {
         }
         let formStyle = {
             width: "40%"
+        }
+
+        if (this.state.userList != null && this.state.filtered != null) {
+            console.log(JSON.stringify(this.state.userList));
+            console.log(JSON.stringify(this.state.filtered));
+            console.log("first: " + JSON.stringify(this.state.userList[0]));
         }
 
         return (

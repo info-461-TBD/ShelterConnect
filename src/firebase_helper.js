@@ -54,6 +54,57 @@ export function signInUser(email, password) {
 }
 
 /* 
+    Returns an array of request objects that corresponds to 
+    - 'criteria' such as one of the following: [donationType, endDate]
+    - with specific value being 'critVal'
+*/
+export function filterRequests(criteria, critVal) {
+    var result = [];
+    var json;
+    var item;
+
+    db.ref("requests").once("value", function(snapshot) {
+        var data = snapshot.val();
+        for (json in data) {
+            for (item in data[json]) {
+                if (data[json][item][criteria] == critVal) {
+                    result.push(data[json][item]);
+                }
+            }
+        }
+    });
+
+    return result;
+}
+
+/*
+    Returns an array of ALL requests in the db
+*/
+export function getRequests() {
+    var result = [];
+    var req;
+
+    db.ref("requests").once("value", function(snapshot) {
+        var data = snapshot.val();
+        for (req in data) {
+            result.push(data[req]);
+        }
+    });
+    return result;
+}
+
+/*
+    Returns an array of ALL users in the db
+*/
+export function retrieveUsers() {
+    let result = new Array();
+    let acc;
+    let data;
+
+    return db.ref("users");
+}
+
+/* 
     Returns a single request object that corresponds to request with id `id` 
 */
 // export function getSingleRequest(id) {
