@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import {Modal, Button} from "react-bootstrap";
 import classnames from "classnames";
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
 import "./style.css";
 const BASEURL = "http://shelterconnect.com/request/";
 const DEFAULT_IMG = "";
