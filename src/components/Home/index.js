@@ -12,7 +12,9 @@ export default class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			requests: [],
+			errorMessage: "",
+			user: undefined,
+			requests: []
 		}
 	}
 
@@ -22,6 +24,19 @@ export default class Home extends Component {
 	}
 	handleMove() {
 		browserHistory.push("/signup");
+	}
+  
+	componentDidMount() {
+		this.queryByValue("request_text");
+		this.authUnsub = firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+				this.setState({ user: user });
+			}
+		});
+	}
+
+	componentWillUnmount() {
+		this.authUnsub();
 	}
 
 	handleDate = () => {
@@ -76,6 +91,7 @@ export default class Home extends Component {
 				<ListGroup className="request-list">
 					{requests}
 				</ListGroup>
+				<h1>{this.state.user ? "Hello " + this.state.user.displayName : "Hello guest"}</h1>
 			</div>
 		);
 	}
