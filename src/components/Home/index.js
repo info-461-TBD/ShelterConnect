@@ -16,13 +16,15 @@ export default class Home extends Component {
 			user: undefined,
 			organizations: [],
 			currentRequests: [],
-			requests: []
+			requests: [],
+			timeSorted: []
 		}
 	}
 
 	componentWillMount() {
 		this.setUserList();
 		this.filterRequests();
+		this.sortByTime();
 	}
 	handleMove() {
 		browserHistory.push("/signup");
@@ -35,6 +37,7 @@ export default class Home extends Component {
 			}
 		});
 	}
+
     setUserList = () => {
         let result = [];
         let data;
@@ -50,6 +53,8 @@ export default class Home extends Component {
             this.setState( { userList : result} );
         });
 	}
+
+
 	
 	filterRequests = (criteria, critVal) => {
         var result = [];
@@ -70,6 +75,32 @@ export default class Home extends Component {
             this.setState( { requests : result} );
         });
     }
+
+    sortByTime = () => {
+		var result = [];
+		var json;
+		var data;
+		var item;
+		let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+		firebase.database().ref("requests").once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+        	for (json in data) {
+        		for (item in data[json]) {
+                    result.push(data[json][item]);
+                }
+        	}
+        	result.sort(function(a,b){
+        		let aDate = months[parseInt(a.endDate.substring(5, 7))] + " " + a.endDate.substring(8) + ", " + a.endDate.substring(0, 4);
+        		let bDate = months[parseInt(b.endDate.substring(5, 7))] + " " + b.endDate.substring(8) + ", " + b.endDate.substring(0, 4);
+				return new Date(bDate) - new Date(aDate);
+			});
+        	this.setState( { timeSorted: result });
+        	console.log(this.state.timeSorted);
+        });
+	}
+
 	componentWillUnmount() {
 		this.authUnsub();
 	}
