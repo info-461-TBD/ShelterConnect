@@ -25,13 +25,18 @@ export default class Request extends React.Component {
         }
     }
 
+            show: false
+        };
+    }
+
     handleClose = () => {
         this.setState({ show: false });
-      }
+    }
     
     handleShow = () => {
         this.setState({ show: true });
     }
+
 
     editData(evt, reqSnapshot) {
         evt.preventDefault();
@@ -50,6 +55,7 @@ export default class Request extends React.Component {
     render() {
         let reqSnapshot = firebase.database().ref().child("requests").push().key;
 
+    render() {
         var tel = "tel:" + this.props.request.tel
         var email = "mailto:" + this.props.request.email + "?Subject=Complete Request " + this.props.id
         return (

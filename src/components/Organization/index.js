@@ -37,7 +37,11 @@ export default class Organization extends Component {
     }
 
     componentWillMount() {
-        this.filterRequests("donationType", "Clothes");
+        this.filterRequests("name", this.props.organization.name);
+    }
+
+    handleOrganizationChange() {
+        this.filterRequests("name", this.props.organization.name);
     }
 
     render() {
@@ -45,6 +49,7 @@ export default class Organization extends Component {
         var email = "mailto:" + this.props.organization.email;
         var requests;
         if (this.state.requests != null) {
+            this.handleOrganizationChange()
             requests = this.state.requests.map (r =>
                 <ListGroupItem>
                     <Request request={r}>
@@ -58,14 +63,14 @@ export default class Organization extends Component {
                 <h4>Description:</h4><br/>
                 <p>{this.props.organization.description}</p>
                 <div className="contact">
-                    <h3>Contact Us!</h3>
+                    <h4>Contact Us!</h4>
                     <p>Phone Number:</p>
                     <a href={tel}>{this.props.organization.tel}</a>
-                    <p>Email:</p>
+                    <h4>Email:</h4>
                     <a href={email}>{this.props.organization.email}</a>
-                    <p>Address:</p>
+                    <h4>Address:</h4>
                     <p>{this.props.organization.address}</p>
-                    <p>Website:</p>
+                    <h4>Website:</h4>
                     <p>{this.props.organization.website}</p>
                 </div>
                 <h2 className="organization-requests">Requests Open for {this.props.organization.name}</h2>

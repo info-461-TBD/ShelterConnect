@@ -59,7 +59,7 @@ export default class About extends Component {
 							<Col class="testimonial" style={infoStyle} md={3}> 
 								<img src={Sunwoo} alt="profile photo" class="profile-img" style={photoStyle} />
 								<h2>Sunwoo Kang</h2>
-								<h4>Developer</h4>
+								<h4>Project Manager</h4>
 							</Col>
 						</Row>
 					</section>

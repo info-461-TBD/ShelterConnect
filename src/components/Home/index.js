@@ -126,8 +126,14 @@ export default class Home extends Component {
 				<h3>Connecting shelters with the right patrons to fight against homelessness</h3>
 				<span>Organization looking to sign up? <a onClick={this.handleMove}>Register Now</a></span>
 				<h1>{this.state.user ? "Hello " + this.state.user.displayName : "Hello guest"}</h1>
+				<h4>Filter by:</h4>
 				<ButtonGroup>
-					<Button onClick={this.handleDate}>by date</Button>
+					<DropdownButton title="by Date.." id="bg-nested-dropdown">
+						<MenuItem > Newest To Oldest
+						</MenuItem>
+						<MenuItem > Oldest to Newest
+						</MenuItem>
+					</DropdownButton>
 					<DropdownButton title="by Organization.." id="bg-nested-dropdown">
 						{organizations}
 					</DropdownButton>
