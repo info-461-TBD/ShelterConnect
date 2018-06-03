@@ -51,12 +51,12 @@ export default class RequestList extends Component {
 		var organizations;
 		requests = this.props.requests.map(r => 
 			<ListGroupItem>
-				<Request request={r}>
+				<Request request={r} user={this.state.user}>
 				</Request>
 			</ListGroupItem>
 		);
-		console.log("hi");
-		console.log(this.props.organizations[0]);
+		// console.log("hi");
+		// console.log(this.props.organizations[0]);
 		organizations = this.props.organizations.map(o =>
 			<MenuItem>
 				{o.name}

@@ -76,7 +76,7 @@ export default class Home extends Component {
 	render() {
 		var requests;
 		if (this.state.userList != null && this.state.requests != null) {
-			console.log(JSON.stringify(this.state.userList));
+			//console.log(JSON.stringify(this.state.userList));
 			requests = <RequestList requests={this.state.requests} organizations={this.state.userList}>
 			</RequestList>
 		}
