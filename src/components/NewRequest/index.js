@@ -128,9 +128,9 @@ export default class NewRequest extends React.Component {
         }
 
         if (this.state.userList != null && this.state.filtered != null) {
-            console.log(JSON.stringify(this.state.userList));
-            console.log(JSON.stringify(this.state.filtered));
-            console.log("first: " + JSON.stringify(this.state.userList[0]));
+            // console.log(JSON.stringify(this.state.userList));
+            // console.log(JSON.stringify(this.state.filtered));
+            // console.log("first: " + JSON.stringify(this.state.userList[0]));
         }
 
         return (
