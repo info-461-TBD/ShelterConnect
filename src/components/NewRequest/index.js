@@ -110,7 +110,8 @@ export default class NewRequest extends React.Component {
             phone: this.state.phone,
             email: this.state.email,
             address: this.state.address,
-            description: this.state.description
+            description: this.state.description,
+            name: this.state.currentUser.displayName
         });
     }
 

@@ -29,7 +29,8 @@ export default class SignUpView extends React.Component {
             personalName: "",
             personalEmail: "",
             elecSign: "",
-            personalSignature: ""
+            personalSignature: "",
+            regCheck: false
         };
         this.handleCheckBox = this.handleCheckBox.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
@@ -51,8 +52,8 @@ export default class SignUpView extends React.Component {
         if (this.state.password !== this.state.confirm) {
             alert("Your passwords do not match");
         } else if(this.state.check == false) {
-            alert("You have not agreed to the terms of agreement");
-            this.state.check == true;
+            alert("You have not agreed to the Terms of Agreement");
+            this.state.check == !this.state.check;
         } else if (this.state.organizationName == "" || this.state.phoneNum == "" || this.state.email == "" ||
                     this.state.streetAddress == "" || this.state.city == "" || this.state.stateName == "" ||
                     this.state.zip == "" || this.state.password == "" || this.state.confirm == "" ||
@@ -149,7 +150,7 @@ export default class SignUpView extends React.Component {
             color: "red"
         }
 
-        if (this.state.currentUser) {
+        if (this.state.currentUser && this.state.regCheck == false) {
             alert("You are already logged in as " + this.state.currentUser.displayName + ". Redirecting you to home....");
             browserHistory.push("/");
         }
@@ -158,7 +159,7 @@ export default class SignUpView extends React.Component {
                 <div className="container" style={signupStyle}>
                     <h1 style={titleStyle}>Sign Up</h1>
 
-                    <form onSubmit={evt => this.handleSignUp(evt)}>
+                    <form onSubmit={evt => this.handleSignUp(evt) & this.setState({ regCheck: !this.state.regCheck })}>
                         <div className="form-group">
                             <h4 style={labelStyle}>Organization Name: <span style={requiredStyle}>* </span></h4>
                             <input id="orgName" type="text" className="form-control"
@@ -265,7 +266,7 @@ export default class SignUpView extends React.Component {
                         </div>
                         <div className="last-row">
                             <div className="form-group">
-                                <button type="submit" className="btn btn-primary">
+                                <button type="submit" className="btn btn-primary" >
                                     Sign Up 
                             </button>
                             <span style={requiredStyle}> * required </span>

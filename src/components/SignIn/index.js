@@ -19,6 +19,7 @@ export default class SignIn extends React.Component {
             this.setState({ currentUser: user });
         });
     }
+
     componentWillUnmount() {
         this.authUnsub();
     }
