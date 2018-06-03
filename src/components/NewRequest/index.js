@@ -13,18 +13,34 @@ export default class NewRequest extends React.Component {
             user: undefined,
             show: false,
             errorMessage: "",
-            donationType: "",   
+            donationType: "Donation Type",   
             endDate: "",
-            // phone: firebase.database().ref('users').child(this.state.user.uid).org_phone,
             phone: "",
             email: "",
             address: "",
             description: ""
 		}
     }
+    
+    componentDidMount() {
+        this.authUnsub = firebase.auth().onAuthStateChanged(user => {
+            this.setState({ user: user });
+            this.setState({ phone: user.org_phone });
+            this.setState({ email: user.org_email });
+            this.setState({ address: user.org_address });
+        });
+        if (this.state.currentUser) {
+            firebase.auth().signOut()
+                .catch(function(error) {
+                    alert("Error: " + error.message);
+                })
+                .then(() => browserHistory.push("/"));
+        }
+    }
 
-
-
+    componentWillUnmount() {
+        this.authUnsub();
+    }
     handleClose = () => {
         this.setState({ show: false });
       }
@@ -34,11 +50,15 @@ export default class NewRequest extends React.Component {
     }
 
     handleNewPost = (evt) => {
-        console.log('send info to firebase');
         evt.preventDefault();
-        // firebase.database().ref('requests').child(user.uid).push(
-
-        // );
+        firebase.database().ref('requests').push({
+            donationType: this.state.donationType,
+            endDate: this.state.endDate,
+            phone: this.state.phone,
+            email: this.state.email,
+            address: this.state.address,
+            description: this.state.description
+        });
     }
 
     render() {
@@ -66,7 +86,15 @@ export default class NewRequest extends React.Component {
                 <Modal.Body>
                     <div className="container">
                         <form onSubmit={evt => this.handleNewPost(evt)}>
-                            <DropdownButton title="Donation Type" id="bg-nested-dropdown">
+                            <DropdownButton title={this.state.donationType} id="bg-nested-dropdown">
+                                <MenuItem eventKey='1'
+                                onClick={evt => this.setState({ donationType: 'Clothes' })}>Clothes</MenuItem>
+                                <MenuItem eventKey='2'
+                                onClick={evt => this.setState({ donationType: 'Food' })}>Food</MenuItem>
+                                <MenuItem eventKey='3' 
+                                onClick={evt => this.setState({ donationType: 'Items' })}>Items</MenuItem>
+                                <MenuItem eventKey='4' 
+                                onClick={evt => this.setState({ donationType: 'Money' })}>Money</MenuItem>
 					        </DropdownButton>
                             <div className="form-group">
                                 <h4 style={labelStyle}>Expiration Date:</h4>
@@ -79,7 +107,7 @@ export default class NewRequest extends React.Component {
                             <div className="form-group">
                                 <h4 style={labelStyle}>Phone:</h4>
                                 <input id="phone" type="phone" className="form-control"
-                                    placeholder={"Change if different from default organization phone number"}
+                                    placeholder={this.state.phone}
                                     value={this.state.phone}
                                     onInput={evt => this.setState({ phone: evt.target.value })}
                                     style={formStyle} />
@@ -87,7 +115,7 @@ export default class NewRequest extends React.Component {
                             <div className="form-group">
                                 <h4 style={labelStyle}>Email:</h4>
                                 <input id="email" type="email" className="form-control"
-                                    placeholder="Change if different from default organization email"
+                                    placeholder={this.state.email}
                                     value={this.state.email}
                                     onInput={evt => this.setState({ email: evt.target.value })}
                                     style={formStyle} />
@@ -95,7 +123,7 @@ export default class NewRequest extends React.Component {
                             <div className="form-group">
                                 <h4 style={labelStyle}>Address:</h4>
                                 <input id="address" type="address" className="form-control"
-                                    placeholder="Change if different from default organization address"
+                                    placeholder={this.state.address}
                                     value={this.state.address}
                                     onInput={evt => this.setState({ address: evt.target.value })} 
                                     style={formStyle}/>
