@@ -46,7 +46,6 @@ export default class Home extends Component {
 				<h3>Connecting shelters with the right patrons to fight against homelessness</h3>
 				<span>Organization looking to sign up? <a onClick={this.handleMove}>Register Now</a></span>
 				<RequestList requests={this.state.requests} organizations={this.state.organizations}></RequestList>
-				<h1>{this.state.user ? "Hello " + this.state.user.displayName : "Hello guest"}</h1>
 			</div>
 		);
 	}
