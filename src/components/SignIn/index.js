@@ -48,14 +48,18 @@ export default class SignIn extends React.Component {
             paddingTop: "5px",
             color: "white"
         }
+        let titleStyle = {
+            fontSize: 60,
+            color: "white"
+        }
         let formStyle = {
-            width: "25%",
+            width: "47%",
         }
         return (
             <section>
                 <section style={signinStyle}>
                     <div className="container">
-                        <h1>Sign In</h1>
+                        <h1 style={titleStyle}>Sign In</h1>
                         <form onSubmit={evt => this.handleSignIn(evt)}>
                             <div className="form-group">
                                 <h4 style={labelStyle}>Email:</h4>

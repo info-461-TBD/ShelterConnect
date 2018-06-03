@@ -44,18 +44,20 @@ export default class Header extends Component {
 						<NavItem eventKey={1} href="/about">
 							About
 						</NavItem>
-						<NavItem eventKey={2} href="/signin">
-							Sign In
+						<NavItem eventKey={2} href="/organizations">
+							Organizations
 						</NavItem>
 						<NavItem eventKey={3} href="/signup">
 							Register
 						</NavItem>
-					
+						
 						{
 		                    this.state.user ?
 		                            <Signout user={this.state.user} />
 		                         :
-		                        null
+		                        <NavItem eventKey={4} href='/signin'>
+									Sign In
+									</NavItem>
 	                	}
                 	</Nav>
                 </Navbar.Collapse>
