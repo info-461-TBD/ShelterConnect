@@ -218,12 +218,6 @@ export function createUser(account_email, password, org_name, contact_email, con
     Writes the passed arguments to the `users/<uid>` section of the database.
 */
 function writeUserData(uid, org_name, org_email, org_phone, org_address, org_description) {
-    console.log("uid: " + uid);
-    console.log("org_name: " + org_name)
-    console.log("org_description: " + org_description);
-    console.log("org_email: " + org_email);
-    console.log("org_name: " + org_name);
-    console.log("org_phone: " + org_phone);
     db.ref("users/" + uid).set({
         "org_address": org_address,
         "org_description": org_description,

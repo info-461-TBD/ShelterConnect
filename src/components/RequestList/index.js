@@ -12,14 +12,6 @@ import "firebase/database";
 export default class RequestList extends Component {
 	constructor(props) {
 		super(props);
-		this.state= {
-			user: undefined
-		}
-	}
-
-	componentWillMount() {
-		// var newRequests = getRequestList();
-		// this.setState({requests: newRequests});
 	}
   
 	componentDidMount() {
@@ -38,41 +30,42 @@ export default class RequestList extends Component {
 		// var newRequests = getRequestList();
 		// this.setState({requests: newRequests});
 	}
-	
-	/*
-	handleOrganization = () => {
-		var newRequests = getOrganizationRequests();
-		this.setState({requests: newRequests});
-	}
-	*/
+
+	filterRequests = (criteria, critVal) => {
+        var result = [];
+        var json;
+        var item;
+        let data;
+
+        firebase.database().ref("requests").once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+            for (json in data) {
+                for (item in data[json]) {
+                    if (data[json][item][criteria] == critVal) {
+                        result.push(data[json][item]);
+                    }
+                }
+            }
+            this.setState({ requests : result} );
+        });
+    }
 
 	render() {
 		var requests;
-		var organizations;
-		requests = this.props.requests.map(r => 
-			<ListGroupItem>
-				<Request request={r}>
-				</Request>
-			</ListGroupItem>
-		);
-		console.log("hi");
-		console.log(this.props.organizations[0]);
-		organizations = this.props.organizations.map(o =>
-			<MenuItem>
-				{o.name}
-			</MenuItem>
-		);
+		if (this.props.requests != null) {
+			requests = this.props.requests.map(r => 
+				<ListGroupItem>
+					<Request request={r}>
+					</Request>
+				</ListGroupItem>
+			);
+		}
 		return (
 			<div className={classnames("RequestList", this.props.className)}>
 				<h1>Open Requests</h1>
 				<span>Filter by:</span>
-				<ButtonGroup>
-					<Button onClick={this.handleDate}>by date</Button>
-					<DropdownButton title="by Organization.." id="bg-nested-dropdown">
-						{organizations}
-					</DropdownButton>
-					<NewRequest user={this.state.user}></NewRequest>
-				</ButtonGroup>
+
 				<ListGroup className="request-list">
 					{requests}
 				</ListGroup>
