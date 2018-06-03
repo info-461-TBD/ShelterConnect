@@ -16,15 +16,13 @@ export default class Home extends Component {
 			user: undefined,
 			organizations: [],
 			currentRequests: [],
-			requests: [],
-			timeSorted: []
+			requests: []
 		}
 	}
 
 	componentWillMount() {
 		this.setUserList();
 		this.filterRequests();
-		this.sortByTime();
 	}
 	handleMove() {
 		browserHistory.push("/signup");
@@ -76,7 +74,7 @@ export default class Home extends Component {
         });
     }
 
-    sortByTime = () => {
+    sortByNew = () => {
 		var result = [];
 		var json;
 		var data;
@@ -96,8 +94,31 @@ export default class Home extends Component {
         		let bDate = months[parseInt(b.endDate.substring(5, 7))] + " " + b.endDate.substring(8) + ", " + b.endDate.substring(0, 4);
 				return new Date(bDate) - new Date(aDate);
 			});
-        	this.setState( { timeSorted: result });
-        	console.log(this.state.timeSorted);
+        	this.setState( { requests: result });
+        });
+	}
+
+	sortByOld = () => {
+		var result = [];
+		var json;
+		var data;
+		var item;
+		let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+		firebase.database().ref("requests").once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+        	for (json in data) {
+        		for (item in data[json]) {
+                    result.push(data[json][item]);
+                }
+        	}
+        	result.sort(function(a,b){
+        		let aDate = months[parseInt(a.endDate.substring(5, 7))] + " " + a.endDate.substring(8) + ", " + a.endDate.substring(0, 4);
+        		let bDate = months[parseInt(b.endDate.substring(5, 7))] + " " + b.endDate.substring(8) + ", " + b.endDate.substring(0, 4);
+				return new Date(aDate) - new Date(bDate);
+			});
+        	this.setState( { requests: result });
         });
 	}
 
@@ -129,9 +150,9 @@ export default class Home extends Component {
 				<h4>Filter by:</h4>
 				<ButtonGroup>
 					<DropdownButton title="by Date.." id="bg-nested-dropdown">
-						<MenuItem > Newest To Oldest
+						<MenuItem onClick={this.sortByNew}> Newest To Oldest
 						</MenuItem>
-						<MenuItem > Oldest to Newest
+						<MenuItem onClick={this.sortByOld}> Oldest to Newest
 						</MenuItem>
 					</DropdownButton>
 					<DropdownButton title="by Organization.." id="bg-nested-dropdown">
