@@ -19,8 +19,15 @@ export default class NewRequest extends React.Component {
             phone: "",
             email: "",
             address: "",
-            description: ""
+            description: "",
+            userList: null,
+            filtered: null
 		}
+    }
+
+    componentWillMount() {
+        this.setUserList();
+        this.filterRequests("donationType", "Clothes");
     }
     
     componentDidMount() {
@@ -28,14 +35,51 @@ export default class NewRequest extends React.Component {
             if (user) {
                 this.setState({ currentUser: user });
                 this.populateForm();
-                console.log(firebase_helper.filterRequests(this.state.currentUser.uid, "donationType", "Clothes"));
-                console.log(firebase_helper.retrieveUsers());
             }
         });
     }
 
     componentWillUnmount() {
         this.authUnsub();
+    }
+
+    filterRequests = (criteria, critVal) => {
+        var result = [];
+        var json;
+        var item;
+        let data;
+
+        firebase.database().ref("requests").once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+            for (json in data) {
+                for (item in data[json]) {
+                    if (data[json][item][criteria] == critVal) {
+                        result.push(data[json][item]);
+                    }
+                }
+            }
+            this.setState( { filtered : result} );
+        });
+    }
+    
+
+    setUserList = () => {
+        let ref = firebase_helper.retrieveUsers();
+
+        let result = [];
+        let data;
+        let acc;
+
+        ref.once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+            for (acc in data) {
+                let curr = data[acc];
+                result.push(curr);
+            }
+            this.setState( { userList : result} );
+        });
     }
 
     populateForm = () => {
@@ -81,6 +125,12 @@ export default class NewRequest extends React.Component {
         }
         let formStyle = {
             width: "40%"
+        }
+
+        if (this.state.userList != null && this.state.filtered != null) {
+            console.log(JSON.stringify(this.state.userList));
+            console.log(JSON.stringify(this.state.filtered));
+            console.log("first: " + JSON.stringify(this.state.userList[0]));
         }
 
         return (
