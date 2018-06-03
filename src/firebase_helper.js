@@ -54,6 +54,41 @@ export function signInUser(email, password) {
 }
 
 /* 
+    Returns an array of request objects that corresponds to 
+    - requests with uid 'id'
+    - filtered by 'criteria' being one of the following: [organization, date, type]
+    - with specific value being 'critVal'
+*/
+export function filterRequests(id, criteria, critVal) {
+    var result = [];
+    var item;
+
+    db.ref("/requests/" + id).once("value", function(snapshot) {
+        var data = snapshot.val();
+        for (item in data) {
+            if (data[item][criteria] == critVal) {
+                result.push(data[item]);
+            }
+        }
+    });
+
+    return result;
+}
+
+export function retrieveUsers() {
+    var result = [];
+    var acc;
+
+    db.ref("users").once("value", function(snapshot) {
+        var data = snapshot.val();
+        for (acc in data) {
+            result.push(data[acc]);
+        }
+    });
+    return result;
+}
+
+/* 
     Returns a single request object that corresponds to request with id `id` 
 */
 // export function getSingleRequest(id) {

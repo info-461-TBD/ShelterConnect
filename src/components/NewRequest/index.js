@@ -4,6 +4,7 @@ import { browserHistory } from "react-router";
 import {Modal, Button, Grid, ListGroup, ListGroupItem, DropdownButton, ButtonGroup, MenuItem } from "react-bootstrap";
 import 'firebase/auth';
 import 'firebase/database';
+import * as firebase_helper from "../../firebase_helper.js";
 
 
 export default class NewRequest extends React.Component {
@@ -27,6 +28,8 @@ export default class NewRequest extends React.Component {
             if (user) {
                 this.setState({ currentUser: user });
                 this.populateForm();
+                console.log(firebase_helper.filterRequests(this.state.currentUser.uid, "donationType", "Clothes"));
+                console.log(firebase_helper.retrieveUsers());
             }
         });
     }
@@ -57,7 +60,7 @@ export default class NewRequest extends React.Component {
 
     handleNewPost = (evt) => {
         evt.preventDefault();
-        firebase.database().ref('requests').push({
+        firebase.database().ref('/requests/' + this.state.currentUser.uid).push({
             donationType: this.state.donationType,
             endDate: this.state.endDate,
             phone: this.state.phone,
