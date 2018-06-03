@@ -38,15 +38,6 @@ export default class SignUpView extends React.Component {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             this.setState({ currentUser: user });
         });
-
-        
-        if (this.state.currentUser) {
-            firebase.auth().signOut()
-                .catch(function(error) {
-                    alert("Error: " + error.message);
-                })
-                .then(() => browserHistory.push("/"));
-        }
     }
 
     componentWillUnmount() {
@@ -72,7 +63,7 @@ export default class SignUpView extends React.Component {
                         return user;
                     })
                     .then(user => {
-                        firebase.database().ref('users').child(user.uid).push({
+                        firebase.database().ref('/users/' + user.uid).set({
                             name: this.state.organizationName,
                             tel: this.state.phoneNum,
                             email: this.state.email,
@@ -122,6 +113,11 @@ export default class SignUpView extends React.Component {
         }
         let labelStyle = {
             color: "white"
+        }
+
+        if (this.state.currentUser) {
+            alert("You are already logged in as " + this.state.currentUser.displayName + ". Redirecting you to home....");
+            browserHistory.push("/");
         }
         return (
             <section>
