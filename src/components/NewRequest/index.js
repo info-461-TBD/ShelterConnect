@@ -26,24 +26,25 @@ export default class NewRequest extends React.Component {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.setState({ currentUser: user });
-
-                var userId = this.state.currentUser.uid;
-                var dbRef = firebase.database().ref('users').child(userId);
-
-                console.log("hi");
-                dbRef.on('value', snapshot => {
-                    let snap = snapshot.val();
-                    this.setState({ user: snap.name });
-                    this.setState({ phone: snap.tel });
-                    this.setState({ email: snap.email });
-                    this.setState({ address: snap.address });
-                });
+                this.populateForm();
             }
         });
     }
 
     componentWillUnmount() {
         this.authUnsub();
+    }
+
+    populateForm = () => {
+        var userId = this.state.currentUser.uid;
+        var dbRef = firebase.database().ref('users').child(userId);
+        dbRef.once('value', snapshot => {
+            let snap = snapshot.val();
+            this.setState({ user: snap.name });
+            this.setState({ phone: snap.tel });
+            this.setState({ email: snap.email });
+            this.setState({ address: snap.address });
+        });
     }
 
     handleClose = () => {

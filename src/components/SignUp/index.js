@@ -63,7 +63,7 @@ export default class SignUpView extends React.Component {
                         return user;
                     })
                     .then(user => {
-                        firebase.database().ref('users').push({
+                        firebase.database().ref('/users/' + user.uid).set({
                             name: this.state.organizationName,
                             tel: this.state.phoneNum,
                             email: this.state.email,
