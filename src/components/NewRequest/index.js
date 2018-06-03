@@ -28,8 +28,6 @@ export default class NewRequest extends React.Component {
             if (user) {
                 this.setState({ currentUser: user });
                 this.populateForm();
-                console.log(firebase_helper.filterRequests(this.state.currentUser.uid, "donationType", "Clothes"));
-                console.log(firebase_helper.retrieveUsers());
             }
         });
     }
@@ -66,7 +64,8 @@ export default class NewRequest extends React.Component {
             phone: this.state.phone,
             email: this.state.email,
             address: this.state.address,
-            description: this.state.description
+            description: this.state.description,
+            name: this.state.currentUser.displayName
         });
     }
 
