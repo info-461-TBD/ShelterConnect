@@ -30,7 +30,7 @@ export default class Request extends React.Component {
 
     handleClose = () => {
         this.setState({ show: false });
-      }
+    }
     
     handleShow = () => {
         this.setState({ show: true });
