@@ -22,7 +22,8 @@ export default class Organization extends Component {
     render() {
         var tel = "tel:" + this.props.organization.tel;
         var email = "mailto:" + this.props.organization.email;
-        this.props.requests.map (r =>
+        var requests;
+        requests = this.props.requests.map (r =>
             <ListGroupItem>
                 <Request request={r}>
                 </Request>
