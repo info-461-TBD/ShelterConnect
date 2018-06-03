@@ -4,7 +4,7 @@ import { browserHistory } from "react-router";
 import classnames from "classnames";
 import NewRequest from "../NewRequest";
 import Request from "../Request";
-import {getRequestList} from "../../firebase_helper.js";
+import * as firebase_helper from "../../firebase_helper.js";
 import RequestList from "../RequestList";
 import firebase from "firebase/app";
 import "./style.css";
@@ -23,6 +23,7 @@ export default class Home extends Component {
 		// var newRequests = getRequestList();
 		// this.setState({requests: newRequests});
 	}
+
 	handleMove() {
 		browserHistory.push("/signup");
 	}
