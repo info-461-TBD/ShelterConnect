@@ -134,7 +134,6 @@ export default class SignUpView extends React.Component {
             borderRadius: '8px'
         }
         let titleStyle = {
-            textAlign: "center",
             fontSize: 60,
             color: "white"
         }
