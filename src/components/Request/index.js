@@ -5,7 +5,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import "./style.css";
-
 const BASEURL = "http://shelterconnect.com/request/";
 const DEFAULT_IMG = "";
 
@@ -21,7 +20,9 @@ export default class Request extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.state.currentUser.email);
+        if (this.state.currentUser) {
+            console.log(this.state.currentUser.email);
+        }
     }
 
     handleClose = () => {
@@ -88,28 +89,28 @@ export default class Request extends React.Component {
                     </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.handleClose}>Close</Button>
-                    {
-                        this.props.request.email == this.state.currentUser.email  ?
-                            <div>
-                                <form onSubmit={evt => this.editData(evt, reqSnapshot)}>
-                                    <div className="form-group">
-                                        <input type="text" className="form-control" 
-                                        placeholder="edit your description"
-                                        value={this.state.edit}
-                                        onInput={evt => this.setState({edit: evt.target.value})}/>
-                                        <button type="submit" className="mx-1">Edit</button> 
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="text" className="form-control" 
-                                        placeholder="edit your address"
-                                        value={this.state.address}
-                                        onInput={evt => this.setState({address: evt.target.value})}/>
-                                        <button className="mx-1" onClick={evt => this.deleteData(evt, reqSnapshot)}>Delete</button>
-                                    </div>
-                                </form>
-                            </div>
-                        : undefined
-                        }
+                    // {
+                    //     this.props.request.email == this.state.currentUser.email  ?
+                    //         <div>
+                    //             <form onSubmit={evt => this.editData(evt, reqSnapshot)}>
+                    //                 <div className="form-group">
+                    //                     <input type="text" className="form-control" 
+                    //                     placeholder="edit your description"
+                    //                     value={this.state.edit}
+                    //                     onInput={evt => this.setState({edit: evt.target.value})}/>
+                    //                     <button type="submit" className="mx-1">Edit</button> 
+                    //                 </div>
+                    //                 <div className="form-group">
+                    //                     <input type="text" className="form-control" 
+                    //                     placeholder="edit your address"
+                    //                     value={this.state.address}
+                    //                     onInput={evt => this.setState({address: evt.target.value})}/>
+                    //                     <button className="mx-1" onClick={evt => this.deleteData(evt, reqSnapshot)}>Delete</button>
+                    //                 </div>
+                    //             </form>
+                    //         </div>
+                    //     : undefined
+                    //     }
                     }
                 </Modal.Footer>
                 </Modal>

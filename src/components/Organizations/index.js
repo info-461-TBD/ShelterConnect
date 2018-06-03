@@ -14,9 +14,30 @@ export default class Organizations extends Component {
 		this.state = {
             userList: undefined,
             currentOrganization: undefined,
+            requests: undefined
         }
     }
-    
+
+    filterRequests = (criteria, critVal) => {
+        var result = [];
+        var json;
+        var item;
+        let data;
+
+        firebase.database().ref("requests").once("value", function(snapshot) {
+            data = snapshot.val();
+        }).then(() => {
+            for (json in data) {
+                for (item in data[json]) {
+                    if (data[json][item][criteria] == critVal) {
+                        result.push(data[json][item]);
+                    }
+                }
+            }
+            this.setState( { requests : result} );
+        });
+    }
+
 
     setUserList = () => {
         let result = [];
@@ -36,11 +57,13 @@ export default class Organizations extends Component {
 
     componentWillMount() {
         this.setUserList();
+        this.filterRequests();
 
     }
 
     handleOrganization = (organization) => {
        this.setState({currentOrganization: organization});
+       this.filterRequests("name", organization.name);
     }
 
     render() {
