@@ -27,7 +27,6 @@ export default class Home extends Component {
 	}
   
 	componentDidMount() {
-		this.queryByValue("request_text");
 		this.authUnsub = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
 				this.setState({ user: user });
@@ -50,18 +49,6 @@ export default class Home extends Component {
 		this.setState({requests: newRequests});
 	}
 	*/
-  
-	// query data ordered by a given child key
-	// child keys: date_added, donation_type, ptr_user_account, request_text
-	queryByValue(child) {
-		var jsonData = [];
-		firebase.database().ref("requests").orderByChild(child).on("child_added", function(snapshot) {
-			console.log(snapshot.key + ": " + snapshot.val().child);
-			jsonData.push(snapshot);
-		});
-		return jsonData;
-	}
-
 	render() {
 		var requests;
 		requests = this.state.requests.map(r => 

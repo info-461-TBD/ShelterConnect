@@ -24,26 +24,31 @@ export default class NewRequest extends React.Component {
     
     componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
-            this.setState({ user: user });
-            this.setState({ phone: user.org_phone });
-            this.setState({ email: user.org_email });
-            this.setState({ address: user.org_address });
+            if (user) {
+                this.setState({ currentUser: user });
+
+                var userId = this.state.currentUser.uid;
+                var dbRef = firebase.database().ref('users').child(userId);
+
+                console.log("hi");
+                dbRef.on('value', snapshot => {
+                    let snap = snapshot.val();
+                    this.setState({ user: snap.name });
+                    this.setState({ phone: snap.tel });
+                    this.setState({ email: snap.email });
+                    this.setState({ address: snap.address });
+                });
+            }
         });
-        if (this.state.currentUser) {
-            firebase.auth().signOut()
-                .catch(function(error) {
-                    alert("Error: " + error.message);
-                })
-                .then(() => browserHistory.push("/"));
-        }
     }
 
     componentWillUnmount() {
         this.authUnsub();
     }
+
     handleClose = () => {
         this.setState({ show: false });
-      }
+    }
     
     handleShow = () => {
         this.setState({ show: true });
@@ -73,6 +78,7 @@ export default class NewRequest extends React.Component {
         let formStyle = {
             width: "40%"
         }
+
         return (
             <section>
                 <section >
