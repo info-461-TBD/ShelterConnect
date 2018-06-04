@@ -1,6 +1,7 @@
 footer {
-    position: relative;
+    position: fixed;
     bottom: 0;
+    left: 0;
     background-color: #3c989e;
     border: 1px solid white;
     border-radius: 4px;

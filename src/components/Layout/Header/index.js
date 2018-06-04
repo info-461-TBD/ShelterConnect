@@ -32,22 +32,22 @@ export default class Header extends Component {
 
 	handleAbout(event) {
         event.preventDefault();
-        browserHistory.push("/about");
+        browserHistory.push("/ShelterConnect/#about/");
         document.location.reload();
 	}
 	handleOrganization(event) {
         event.preventDefault();
-        browserHistory.push("/organizations");
+        browserHistory.push("/ShelterConnect/#organizations/");
         document.location.reload();
 	}
 	handleRegistration(event) {
         event.preventDefault();
-        browserHistory.push("/signup");
+        browserHistory.push("/ShelterConnect/#signup/");
         document.location.reload();
 	}
 	handleSignIn(event) {
         event.preventDefault();
-        browserHistory.push("/signin");
+        browserHistory.push("/ShelterConnect/#signin/");
         document.location.reload();
 	}
 	render() {
@@ -75,7 +75,7 @@ export default class Header extends Component {
 		                    this.state.user ?
 		                            <Signout user={this.state.user} />
 		                         :
-		                        <NavItem eventKey={4} href='/signin' onClick={this.handleSignIn}>
+		                        <NavItem eventKey={4} href='#signin/' onClick={this.handleSignIn}>
 									Sign In
 									</NavItem>
 	                	}

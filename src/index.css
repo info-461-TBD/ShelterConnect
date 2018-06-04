@@ -5,3 +5,9 @@ body {
   background-color: #5DB5A4;
   color: white;
 }
+
+.content {
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 80px;
+}
