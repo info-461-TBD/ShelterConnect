@@ -30,6 +30,26 @@ export default class Header extends Component {
         });
     }
 
+	handleAbout(event) {
+        event.preventDefault();
+        browserHistory.push("/about");
+        document.location.reload();
+	}
+	handleOrganization(event) {
+        event.preventDefault();
+        browserHistory.push("/organizations");
+        document.location.reload();
+	}
+	handleRegistration(event) {
+        event.preventDefault();
+        browserHistory.push("/signup");
+        document.location.reload();
+	}
+	handleSignIn(event) {
+        event.preventDefault();
+        browserHistory.push("/signin");
+        document.location.reload();
+	}
 	render() {
 		return(
 			<Navbar collapseOnSelect>
@@ -41,13 +61,13 @@ export default class Header extends Component {
 				</Navbar.Header>
 				<Navbar.Collapse>
 					<Nav pullRight>
-						<NavItem eventKey={1} href="/about">
+						<NavItem eventKey={1} onClick={this.handleAbout}>
 							About
 						</NavItem>
-						<NavItem eventKey={2} href="/organizations">
+						<NavItem eventKey={2} onClick={this.handleOrganization}>
 							Organizations
 						</NavItem>
-						<NavItem eventKey={3} href="/signup">
+						<NavItem eventKey={3} onClick={this.handleRegistration}>
 							Register
 						</NavItem>
 						
@@ -55,7 +75,7 @@ export default class Header extends Component {
 		                    this.state.user ?
 		                            <Signout user={this.state.user} />
 		                         :
-		                        <NavItem eventKey={4} href='/signin'>
+		                        <NavItem eventKey={4} href='/signin' onClick={this.handleSignIn}>
 									Sign In
 									</NavItem>
 	                	}
