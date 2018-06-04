@@ -1,8 +1,9 @@
 {
   "name": "shelter-connect",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "description": "A web application to connect homeless shelters and organizations in need to individuals who want to help.",
+  "homepage": "https://info-461-tbd.github.io/ShelterConnect/",
   "dependencies": {
     "classnames": "^2.2.5",
     "firebase": "^5.0.2",
@@ -13,12 +14,15 @@
   },
   "devDependencies": {
     "eslint": "^3.19.0",
+    "gh-pages": "^1.2.0",
     "react-scripts": "^1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   }
 }
