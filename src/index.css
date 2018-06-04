@@ -6,8 +6,6 @@ body {
   color: white;
 }
 
-.content {
-  min-height: 100%;
-  position: relative;
-  padding-bottom: 80px;
+.Main{
+  min-height: calc(100vh - 144px);
 }
