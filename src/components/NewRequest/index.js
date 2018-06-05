@@ -83,8 +83,8 @@ export default class NewRequest extends React.Component {
     }
 
     handleSubmit = () => {
-        if (this.state.description == "" || this.state.donationType == "Donation Type") {
-            alert("donation type or description can not be left empty");
+        if (this.state.endDate == "" || this.state.description == "" || this.state.donationType == "Donation Type") {
+            alert("donation type, endDate, or description can not be left empty");
         } else {
             this.handleClose();
         }
@@ -111,7 +111,6 @@ export default class NewRequest extends React.Component {
     }
 
     handleNewPost = (evt) => {
-        evt.preventDefault();
         firebase.database().ref('/requests/' + this.state.currentUser.uid).push({
             donationType: this.state.donationType,
             endDate: this.state.endDate,

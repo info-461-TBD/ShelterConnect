@@ -54,6 +54,10 @@ export default class Home extends Component {
 	}
 
 
+	newRequestHandler = () => {
+		this.filterRequests();
+	}
+
 	
 	filterRequests = (criteria, critVal) => {
         var result = [];
@@ -159,7 +163,7 @@ export default class Home extends Component {
 					<DropdownButton title="by Organization.." id="bg-nested-dropdown">
 						{organizations}
 					</DropdownButton>
-					<NewRequest user={this.state.user}></NewRequest>
+					<NewRequest user={this.state.user} action={this.newRequestHandler}></NewRequest>
 				</ButtonGroup>
 				{requests}
 			</div>
