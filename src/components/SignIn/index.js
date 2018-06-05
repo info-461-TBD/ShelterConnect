@@ -26,7 +26,8 @@ export default class SignIn extends React.Component {
     handleSignIn(evt) {
         evt.preventDefault();
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => browserHistory.push("/"))
+            .then(() => browserHistory.push("/ShelterConnect/#"))
+            .then(() => document.location.reload())
             .then(console.log(this.state.currentUser))
             .catch(err => alert(err.message));
     }
