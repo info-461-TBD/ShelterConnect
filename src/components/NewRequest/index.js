@@ -82,6 +82,14 @@ export default class NewRequest extends React.Component {
         });
     }
 
+    handleSubmit = () => {
+        if (this.state.description == "" || this.state.donationType == "Donation Type") {
+            alert("donation type or description can not be left empty");
+        } else {
+            this.handleClose();
+        }
+    }
+
     populateForm = () => {
         var userId = this.state.currentUser.uid;
         var dbRef = firebase.database().ref('users').child(userId);
@@ -202,7 +210,7 @@ export default class NewRequest extends React.Component {
                             </div>
                             <div className="last-row d-flex">
                                 <div className="form-group">
-                                    <button type="submit" className="btn btn-primary">
+                                    <button type="submit" className="btn btn-primary" onClick={() => this.handleSubmit()}>
                                         Submit
                                     </button>
                                 </div>
