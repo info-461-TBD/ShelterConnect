@@ -25,7 +25,8 @@ export default class Home extends Component {
 		this.filterRequests();
 	}
 	handleMove() {
-		browserHistory.push("/signup");
+		browserHistory.push("/ShelterConnect/#signup");
+		document.location.reload();		
 	}
   
 	componentDidMount() {
@@ -145,7 +146,7 @@ export default class Home extends Component {
 		return (
 			<div className={classnames("App", this.props.className)}>
 				<h3>Connecting shelters with the right patrons to fight against homelessness</h3>
-				<span>Organization looking to sign up? <a onClick={this.handleMove}>Register Now</a></span>
+				<span>Organization looking to sign up? <a href="/ShelterConnect/#signup">Register Now</a></span>
 				<h1>{this.state.user ? "Hello " + this.state.user.displayName : "Hello guest"}</h1>
 				<h4>Filter by:</h4>
 				<ButtonGroup>

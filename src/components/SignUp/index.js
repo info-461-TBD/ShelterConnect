@@ -98,7 +98,7 @@ export default class SignUpView extends React.Component {
                         });
                     })
                     .then(() => firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password))
-                    .then(() => browserHistory.push("/"))
+                    .then(() => browserHistory.push("/ShelterConnect/#/"))
                     .catch(err => console.log(err.message));
             } else {
                 alert("Email or password is incorrect.");
@@ -151,7 +151,7 @@ export default class SignUpView extends React.Component {
 
         if (this.state.currentUser && this.state.regCheck == false) {
             alert("You are already logged in as " + this.state.currentUser.displayName + ". Redirecting you to home....");
-            browserHistory.push("/");
+            browserHistory.push("/ShelterConnect/#");
         }
         return (
             <section>

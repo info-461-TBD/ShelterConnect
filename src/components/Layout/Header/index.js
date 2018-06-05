@@ -96,13 +96,13 @@ class Signout extends React.Component {
     // figure out how to transition to home screen after signing out
     handleSignOut(event) {
         event.preventDefault();
-        firebase.auth().signOut().then(browserHistory.push("/"));
+        firebase.auth().signOut().then(browserHistory.push("/ShelterConnect/#"));
         document.location.reload();
     }
 
     render() {
         return (
-            <NavItem eventKey={4} href="/" onClick={this.handleSignOut}>
+            <NavItem eventKey={4} href="/ShelterConnect/#" onClick={this.handleSignOut}>
                 Sign Out
             </NavItem>
         );
