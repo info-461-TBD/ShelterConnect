@@ -136,10 +136,13 @@ export default class NewRequest extends React.Component {
 
         return (
             <section>
-                <section >
-                <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
-                    Create New Request
-                </Button>
+                <section>
+                {this.state.user ? 
+                    <Button className="my-1" bsStyle="primary" bsSize="large" onClick={this.handleShow}>
+                        Create New Request
+                    </Button>
+                : undefined
+                }
                 <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title style={labelStyle}>New Request</Modal.Title>
