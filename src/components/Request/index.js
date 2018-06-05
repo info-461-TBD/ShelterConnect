@@ -50,10 +50,11 @@ export default class Request extends React.Component {
 
     render() {
         var tel = "tel:" + this.props.request.tel
-        var email = "mailto:" + this.props.request.email + "?Subject=Complete Request " + this.props.id
+        var email = "mailto:" + this.props.request.email + "?Subject=Complete Request for" + this.props.request.name;
         return (
             <div className="request">
-                <p>Request Type: {this.props.request.donationType}</p>
+                <p>{this.props.request.donationType} Request for <span className="organization-name"> {this.props.request.name} </span></p>
+                <p className="date">Needed by {this.props.request.endDate}</p>
                 <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
                         details
                 </Button>
