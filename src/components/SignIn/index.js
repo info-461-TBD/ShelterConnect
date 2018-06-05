@@ -83,7 +83,7 @@ export default class SignIn extends React.Component {
                                         Sign In
                             </button>
                                 </div>
-                                <p style={textStyle}>Don't yet have an account?</p>
+                                <p style={textStyle}><a href="/ShelterConnect/#signup">Don't yet have an account?</a></p>
                             </div>
                         </form>
                     </div>

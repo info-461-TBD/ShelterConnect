@@ -55,7 +55,7 @@ export default class Header extends Component {
 			<Navbar collapseOnSelect>
 				<Navbar.Header>
   					<Navbar.Brand>
-						<a href="/">ShelterConnect</a>
+						<a href="/ShelterConnect/#">ShelterConnect</a>
   					</Navbar.Brand>
   					<Navbar.Toggle />
 				</Navbar.Header>
@@ -75,7 +75,7 @@ export default class Header extends Component {
 		                    this.state.user ?
 		                            <Signout user={this.state.user} />
 		                         :
-		                        <NavItem eventKey={4} href='#signin/' onClick={this.handleSignIn}>
+		                        <NavItem eventKey={4} href='/ShelterConnect/#signin/' onClick={this.handleSignIn}>
 									Sign In
 									</NavItem>
 	                	}
