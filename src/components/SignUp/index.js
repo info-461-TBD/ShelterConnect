@@ -107,7 +107,7 @@ export default class SignUpView extends React.Component {
     }
 
     validatePhoneNumber(elementValue){
-        var phoneNumberPattern = /^(\+)?(1)?\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+        var phoneNumberPattern = /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i;
         return phoneNumberPattern.test(elementValue);
     }
 
