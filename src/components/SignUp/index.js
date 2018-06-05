@@ -69,6 +69,8 @@ export default class SignUpView extends React.Component {
         } else if (this.state.website && this.state.websiteValid == false) {
             alert("Please enter a valid website");
             this.state.websiteValid == true;
+        } else if (this.state.password.length < 6) {
+            alert("Please enter a password that is at least 6 characters")
         } else {
             let user;
             if (this.state.organizationName) {
