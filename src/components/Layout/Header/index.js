@@ -67,10 +67,15 @@ export default class Header extends Component {
 						<NavItem eventKey={2} onClick={this.handleOrganization}>
 							Organizations
 						</NavItem>
-						<NavItem eventKey={3} onClick={this.handleRegistration}>
-							Register
-						</NavItem>
 						
+						{
+		                    this.state.user ?
+		                            null
+		                         :
+                                 <NavItem eventKey={3} onClick={this.handleRegistration}>
+                                 Register
+                                </NavItem>
+	                	}
 						{
 		                    this.state.user ?
 		                            <Signout user={this.state.user} />

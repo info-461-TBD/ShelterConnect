@@ -107,7 +107,7 @@ export default class SignUpView extends React.Component {
     }
 
     validatePhoneNumber(elementValue){
-        var phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+        var phoneNumberPattern = /^(\+)?(1)?\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
         return phoneNumberPattern.test(elementValue);
     }
 
@@ -150,8 +150,9 @@ export default class SignUpView extends React.Component {
         }
 
         if (this.state.currentUser && this.state.regCheck == false) {
-            alert("You are already logged in as " + this.state.currentUser.displayName + ". Redirecting you to home....");
-            browserHistory.push("/ShelterConnect/#");
+            browserHistory.push("/ShelterConnect/#/");
+            document.location.reload();
+            
         }
         return (
             <section>
